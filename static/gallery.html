@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery — Mysore Raman Idli</title>
+  <meta name="description" content="A visual feast from Mysore Raman Idli — food, ambience, process, and moments." />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar inner-page" id="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <img src="images/mri-text-only-logo.webp" alt="Mysore Raman Idli" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="gallery.html" class="active">Gallery</a></li>
+      <li><a href="locations.html">Locations</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="menu.html" class="nav-order">Order Now</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="nav-overlay"></div>
+<nav class="nav-drawer">
+  <a href="index.html">Home</a>
+  <a href="menu.html">Menu</a>
+  <a href="about.html">About</a>
+  <a href="gallery.html" class="active">Gallery</a>
+  <a href="locations.html">Locations</a>
+  <a href="contact.html">Contact</a>
+  <a href="menu.html" class="nav-drawer-order">Order Now</a>
+</nav>
+
+<main>
+
+<!-- ===== PAGE HERO ===== -->
+<section class="page-hero grain">
+  <div class="container-xl" style="position:relative;z-index:2;">
+    <div class="reveal">
+      <div class="section-label" style="margin-bottom:1.25rem;">Gallery</div>
+      <h1>Feast your eyes<br /><span class="text-gradient-gold" style="font-style:italic;">first.</span></h1>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FILTER ===== -->
+<div class="gallery-filter-bar">
+  <div class="gallery-filter-inner">
+    <button class="gallery-filter-btn active" data-cat="All">All</button>
+    <button class="gallery-filter-btn" data-cat="Food">Food</button>
+    <button class="gallery-filter-btn" data-cat="Ambience">Ambience</button>
+    <button class="gallery-filter-btn" data-cat="Process">Process</button>
+    <button class="gallery-filter-btn" data-cat="Moments">Moments</button>
+  </div>
+</div>
+
+<!-- ===== MASONRY GALLERY ===== -->
+<section class="gallery-masonry-section">
+  <div class="container-xl">
+    <div class="gallery-masonry">
+      <!-- Soft idlis with sambar and chutney -->
+      <div class="gallery-masonry-item tall reveal" data-cat="Food" data-delay="0">
+        <img src="https://images.unsplash.com/photo-1668236499396-a62d2d1cb0cf?w=800&q=90&auto=format&fit=crop" alt="Soft Idli with Sambar" loading="lazy" />
+        <div class="gallery-masonry-overlay"><div class="gallery-masonry-caption"><span>Soft Idli</span></div></div>
+      </div>
+      <!-- Masala dosa at Bengaluru cafe -->
+      <div class="gallery-masonry-item reveal" data-cat="Food" data-delay="0.05">
+        <img src="https://images.unsplash.com/photo-1694849789325-914b71ab4075?w=800&q=90&auto=format&fit=crop" alt="Masala Dosa" loading="lazy" />
+        <div class="gallery-masonry-overlay"><div class="gallery-masonry-caption"><span>Masala Dosa</span></div></div>
+      </div>
+      <!-- South Indian filter coffee in steel tumbler -->
+      <div class="gallery-masonry-item reveal" data-cat="Food" data-delay="0.1">
+        <img src="https://images.unsplash.com/photo-1757918391899-1341f7b285fb?w=600&q=90&auto=format&fit=crop" alt="South Indian Filter Coffee" loading="lazy" />
+        <div class="gallery-masonry-overlay"><div class="gallery-masonry-caption"><span>Filter Coffee</span></div></div>
+      </div>
+      <!-- Dosa on metal tray with banana leaf -->
+      <div class="gallery-masonry-item tall reveal" data-cat="Food" data-delay="0.15">
+        <img src="https://images.unsplash.com/photo-1743615467204-8fdaa85ff2db?w=800&q=90&auto=format&fit=crop" alt="Dosa on Banana Leaf Tray" loading="lazy" />
+        <div class="gallery-masonry-overlay"><div class="gallery-masonry-caption"><span>Traditional Dosa</span></div></div>
+      </div>
+      <!-- Tamil vegetarian thali on banana leaf -->
+      <div class="gallery-masonry-item reveal" data-cat="Ambience" data-delay="0.2">
+        <img src="https://images.unsplash.com/photo-1742281257687-092746ad6021?w=800&q=90&auto=format&fit=crop" alt="Banana Leaf Thali" loading="lazy" />
+        <div class="gallery-masonry-overlay"><div class="gallery-masonry-caption"><span>Banana Leaf Service</span></div></div>
+      </div>
+      <!-- Dosa being prepared -->
+      <div class="gallery-masonry-item reveal" data-cat="Process" data-delay="0.25">
+        <img src="https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=800&q=90&auto=format&fit=crop" alt="Dosa Preparation" loading="lazy" />
+        <div class="gallery-masonry-overlay"><div class="gallery-masonry-caption"><span>Dosa Preparation</span></div></div>
+      </div>
+      <!-- Dosa with chutneys and sambar -->
+      <div class="gallery-masonry-item reveal" data-cat="Food" data-delay="0.3">
+        <img src="https://images.unsplash.com/photo-1743615467363-250466982515?w=800&q=90&auto=format&fit=crop" alt="Dosa with Chutneys" loading="lazy" />
+        <div class="gallery-masonry-overlay"><div class="gallery-masonry-caption"><span>Dosa &amp; Chutneys</span></div></div>
+      </div>
+      <!-- Ghee Podi Idli -->
+      <div class="gallery-masonry-item reveal" data-cat="Food" data-delay="0.35">
+        <img src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=800&q=90&auto=format&fit=crop" alt="Ghee Podi Idli" loading="lazy" />
+        <div class="gallery-masonry-overlay"><div class="gallery-masonry-caption"><span>Ghee Podi Idli</span></div></div>
+      </div>
+      <!-- Crispy dosa on silver tray -->
+      <div class="gallery-masonry-item tall reveal" data-cat="Food" data-delay="0.4">
+        <img src="https://images.unsplash.com/photo-1743517894265-c86ab035adef?w=800&q=90&auto=format&fit=crop" alt="Crispy Dosa" loading="lazy" />
+        <div class="gallery-masonry-overlay"><div class="gallery-masonry-caption"><span>Crispy Dosa</span></div></div>
+      </div>
+      <!-- Brass filter coffee maker -->
+      <div class="gallery-masonry-item reveal" data-cat="Process" data-delay="0.45">
+        <img src="https://images.unsplash.com/photo-1758387941825-a6ecaec9c14d?w=600&q=90&auto=format&fit=crop" alt="Traditional Filter Coffee Maker" loading="lazy" />
+        <div class="gallery-masonry-overlay"><div class="gallery-masonry-caption"><span>Filter Coffee Brewing</span></div></div>
+      </div>
+      <!-- Dosa large South Indian style -->
+      <div class="gallery-masonry-item reveal" data-cat="Ambience" data-delay="0.5">
+        <img src="https://images.unsplash.com/photo-1665660710687-b44c50751054?w=800&q=90&auto=format&fit=crop" alt="South Indian Dosa" loading="lazy" />
+        <div class="gallery-masonry-overlay"><div class="gallery-masonry-caption"><span>Morning Dosa</span></div></div>
+      </div>
+      <!-- South Indian breakfast spread -->
+      <div class="gallery-masonry-item reveal" data-cat="Moments" data-delay="0.55">
+        <img src="https://images.unsplash.com/photo-1742281257687-092746ad6021?w=800&q=90&auto=format&fit=crop" alt="Morning Breakfast Spread" loading="lazy" />
+        <div class="gallery-masonry-overlay"><div class="gallery-masonry-caption"><span>Morning Spread</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" aria-label="Close">&times;</button>
+  <div class="lightbox-img-wrap">
+    <img src="" alt="" id="lightbox-img" />
+  </div>
+</div>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-quote-strip">
+    <div class="footer-quote-inner">
+      <p class="footer-quote">&ldquo;Bringing the soul of Mysore breakfast to the heart of Kochi&rdquo;</p>
+      <div class="footer-social">
+        <a href="https://instagram.com/mysoreramanidli" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="https://facebook.com/mysoreramanidli" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        <a href="https://youtube.com/@mysoreramanidli" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-grid">
+    <div>
+      <img src="images/mri-text-only-logo.webp" alt="Mysore Raman Idli" class="footer-brand-logo" />
+      <p class="footer-brand-desc">Authentic Mysore-style breakfast traditions brought to Kochi. Naturally fermented idlis, handcrafted chutneys, premium podi blends.</p>
+      <a href="menu.html" class="footer-brand-link">View Full Menu &rarr;</a>
+    </div>
+    <div>
+      <h3 class="footer-col-title">Explore</h3>
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li><li><a href="menu.html">Menu</a></li><li><a href="about.html">About</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="locations.html">Locations</a></li><li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="footer-col-title">Our Menu</h3>
+      <ul class="footer-links">
+        <li><a href="menu.html">Idli Specials</a></li><li><a href="menu.html">Podi Idli</a></li><li><a href="menu.html">Dosas</a></li><li><a href="menu.html">Filter Coffee</a></li><li><a href="menu.html">Uttappam</a></li><li><a href="menu.html">Beverages</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="footer-col-title">Locations</h3>
+      <div class="footer-loc-block">
+        <p class="footer-loc-name">Kakkanad</p>
+        <div class="footer-loc-info"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Near InfoPark, Kakkanad, Kochi – 682030</span></div>
+        <div class="footer-loc-info"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>7:00 AM – 10:00 PM</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <p class="footer-copy">&copy; 2025 Mysore Raman Idli. All rights reserved.</p>
+      <div class="footer-legal"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+/* =============================================
+   MYSORE RAMAN IDLI — Main JavaScript
+   ============================================= */
+
+
+/* --- Navbar --- */
+(function initNavbar() {
+  const navbar = document.querySelector('.navbar');
+  if (!navbar) return;
+
+  const isInnerPage = navbar.classList.contains('inner-page');
+  const hamburger = navbar.querySelector('.hamburger');
+  const drawer = document.querySelector('.nav-drawer');
+  const overlay = document.querySelector('.nav-overlay');
+
+  // Set initial state
+  if (!isInnerPage) {
+    navbar.classList.add('transparent');
+  }
+
+  // Scroll handler
+  function onScroll() {
+    if (isInnerPage) return;
+    if (window.scrollY > 50) {
+      navbar.classList.remove('transparent');
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+      navbar.classList.add('transparent');
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Hamburger
+  if (hamburger && drawer && overlay) {
+    function openDrawer() {
+      hamburger.classList.add('open');
+      drawer.classList.add('open');
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer() {
+      hamburger.classList.remove('open');
+      drawer.classList.remove('open');
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    hamburger.addEventListener('click', () => {
+      if (drawer.classList.contains('open')) closeDrawer();
+      else openDrawer();
+    });
+    overlay.addEventListener('click', closeDrawer);
+    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
+  }
+})();
+
+/* --- Scroll Reveal (IntersectionObserver) --- */
+(function initReveal() {
+  const els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  if (!els.length) return;
+
+  // Apply stagger delays from data-delay (used as animation-delay on .visible)
+  els.forEach(el => {
+    const delay = el.dataset.delay;
+    if (delay) el.dataset.animDelay = delay;
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Double rAF ensures browser has painted opacity:0 before transitioning
+        const el = entry.target;
+        const delay = el.dataset.animDelay;
+        if (delay) el.style.animationDelay = delay + 's';
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            el.classList.add('visible');
+          });
+        });
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  // Let browser paint opacity:0 first, then trigger transitions
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      els.forEach(el => {
+        observer.observe(el);
+      });
+    });
+  });
+})();
+
+/* --- Menu Page Tabs --- */
+(function initMenuTabs() {
+  const tabs = document.querySelectorAll('.menu-tab');
+  if (!tabs.length) return;
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.cat;
+      // Update active tab
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      // Show/hide sections
+      document.querySelectorAll('.menu-items-section').forEach(section => {
+        if (section.dataset.cat === target) {
+          section.style.display = 'grid';
+        } else {
+          section.style.display = 'none';
+        }
+      });
+    });
+  });
+})();
+
+/* --- Gallery Filter --- */
+(function initGalleryFilter() {
+  const btns = document.querySelectorAll('.gallery-filter-btn');
+  if (!btns.length) return;
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cat = btn.dataset.cat;
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      document.querySelectorAll('.gallery-masonry-item').forEach(item => {
+        if (cat === 'All' || item.dataset.cat === cat) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  });
+})();
+
+/* --- Lightbox --- */
+(function initLightbox() {
+  const lightbox = document.querySelector('.lightbox');
+  if (!lightbox) return;
+
+  const lightboxImg = lightbox.querySelector('img');
+  const closeBtn = lightbox.querySelector('.lightbox-close');
+
+  document.querySelectorAll('.gallery-masonry-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const img = item.querySelector('img');
+      if (img) {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+})();
+
+/* --- Contact Form --- */
+(function initContactForm() {
+  const form = document.querySelector('.contact-form');
+  if (!form) return;
+
+  const success = document.querySelector('.form-success');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    form.style.display = 'none';
+    if (success) success.classList.add('visible');
+  });
+})();

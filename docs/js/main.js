@@ -124,9 +124,10 @@
     }
   }
 
-  // Run on load
+  // Run on load and when hash changes (same-page footer link clicks)
   document.addEventListener('DOMContentLoaded', checkHash);
   window.addEventListener('load', checkHash);
+  window.addEventListener('hashchange', checkHash);
 })();
 
 /* --- Gallery Filter --- */

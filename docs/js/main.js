@@ -119,7 +119,13 @@
     const hash = window.location.hash.replace('#', '');
     if (hash && Array.from(tabs).some(t => t.dataset.cat === hash)) {
       activateTab(hash);
-      window.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'instant' });
+      const tabsBar = document.querySelector('.menu-tabs-bar');
+      const navbar = document.querySelector('.navbar');
+      if (tabsBar) {
+        const navH = navbar ? navbar.offsetHeight : 0;
+        const scrollTarget = tabsBar.offsetTop - navH;
+        window.scrollTo({ top: scrollTarget, behavior: smooth ? 'smooth' : 'instant' });
+      }
     }
   }
 

@@ -1321,7 +1321,7 @@ footer {
 }
 /* On mobile: brand full-width, then Explore+Menu side by side, then Locations */
 @media (max-width: 767px) {
-  .footer-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 20px; padding-top: 50px; padding-bottom: 20px; }
   .footer-grid > div:first-child { grid-column: 1 / -1; }
   .footer-grid > div:last-child  { grid-column: 1 / -1; }
   .footer-quote { text-align: center; }

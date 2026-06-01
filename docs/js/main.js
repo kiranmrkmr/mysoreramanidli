@@ -115,13 +115,17 @@
   });
 
   // Activate tab from URL hash on page load
-  const hash = window.location.hash.replace('#', '');
-  if (hash && Array.from(tabs).some(t => t.dataset.cat === hash)) {
-    activateTab(hash);
-    setTimeout(() => {
-      document.querySelector('.menu-tabs-bar')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
+  function checkHash() {
+    const hash = window.location.hash.replace('#', '');
+    if (hash && Array.from(tabs).some(t => t.dataset.cat === hash)) {
+      activateTab(hash);
+    }
   }
+
+  // Run immediately and also after DOM + resources settle
+  checkHash();
+  document.addEventListener('DOMContentLoaded', checkHash);
+  window.addEventListener('load', checkHash);
 })();
 
 /* --- Gallery Filter --- */

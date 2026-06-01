@@ -1579,7 +1579,7 @@ footer {
 .about-text h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); line-height: 1.1; color: var(--charcoal); margin-bottom: 1.5rem; }
 .about-text p { color: var(--mid-gray); line-height: 1.8; margin-bottom: 1.25rem; }
 .about-text em { font-style: italic; }
-.about-text .accent { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.125rem; color: var(--charcoal); }
+.about-text .accent { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.35rem; color: var(--charcoal); font-weight: 600; line-height: 1.6; border-left: 3px solid var(--gold); padding-left: 1rem; margin-top: 1.5rem; }
 .values-section { padding: 6rem 0; background: var(--ivory); }
 .values-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
 @media (min-width: 640px) { .values-grid { grid-template-columns: repeat(2, 1fr); } }

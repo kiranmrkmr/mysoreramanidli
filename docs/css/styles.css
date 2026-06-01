@@ -302,7 +302,7 @@ button { font-family: inherit; cursor: pointer; }
 .navbar.inner-page .nav-links a { color: var(--charcoal); }
 .navbar.scrolled .nav-links a:hover,
 .navbar.inner-page .nav-links a:hover { color: var(--forest-green); background: rgba(26,92,42,0.06); }
-.nav-links a.active { color: var(--forest-green) !important; font-weight: 600; }
+.nav-links a.active { color: inherit !important; font-weight: 600; text-decoration: underline; text-underline-offset: 5px; text-decoration-color: rgba(255,255,255,0.7); text-decoration-thickness: 1.5px; }
 
 .nav-order {
   display: none;

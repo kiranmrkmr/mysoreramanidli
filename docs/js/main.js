@@ -380,7 +380,7 @@
     const qty = parseInt(qtyInput.value) || 1;
     const total = currentDish.price * qty;
     const msg =
-      `Hello! I'd like to place an order from Mysore Raman Idli 🍽️\n\n` +
+      `Hello! I'd like to place an order from Mysore Raman Idli.\n\n` +
       `*Item:* ${currentDish.name}\n` +
       `*Quantity:* ${qty} plate${qty > 1 ? 's' : ''}\n` +
       `*Price per plate:* ₹${currentDish.price}\n` +

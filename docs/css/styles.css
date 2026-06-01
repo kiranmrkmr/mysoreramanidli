@@ -1645,7 +1645,8 @@ footer {
   margin-bottom: 1rem;
 }
 .gallery-masonry-item.tall { height: 300px; }
-.gallery-masonry-item:not(.tall) { height: 210px; }
+.gallery-masonry-item.square { height: 260px; }
+.gallery-masonry-item:not(.tall):not(.square) { height: 210px; }
 .gallery-masonry-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s; }
 .gallery-masonry-item:hover img { transform: scale(1.05); }
 .gallery-masonry-overlay {

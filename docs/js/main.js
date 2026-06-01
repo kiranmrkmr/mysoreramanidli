@@ -119,14 +119,8 @@
     const hash = window.location.hash.replace('#', '');
     if (hash && Array.from(tabs).some(t => t.dataset.cat === hash)) {
       activateTab(hash);
-      // Scroll so tabs bar sits just below the navbar
-      const tabsBar = document.querySelector('.menu-tabs-bar');
-      const navbar = document.querySelector('.navbar');
-      if (tabsBar) {
-        const navHeight = navbar ? navbar.getBoundingClientRect().height : 0;
-        const tabsTop = tabsBar.getBoundingClientRect().top + window.scrollY - navHeight;
-        window.scrollTo({ top: tabsTop, behavior: 'smooth' });
-      }
+      // Scroll to top so sticky tabs bar + content are visible from the start
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 

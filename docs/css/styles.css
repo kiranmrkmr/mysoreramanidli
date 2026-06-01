@@ -1372,27 +1372,49 @@ footer {
    ============================================= */
 .page-hero {
   position: relative;
-  padding-top: 8rem;
-  padding-bottom: 4rem;
+  min-height: 52vh;
+  display: flex;
+  align-items: flex-end;
+  padding-top: 10rem;
+  padding-bottom: 4.5rem;
+  overflow: hidden;
   background: var(--forest-dark);
-  overflow: visible;
 }
-.page-hero-blob {
+.page-hero-bg {
   position: absolute;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #2D7A40 0%, transparent 70%);
-  opacity: 0.14;
-  pointer-events: none;
+  inset: 0;
+  z-index: 0;
+}
+.page-hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+.page-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to right,
+    rgba(10, 39, 16, 0.88) 0%,
+    rgba(10, 39, 16, 0.65) 50%,
+    rgba(10, 39, 16, 0.3) 100%
+  );
+}
+.page-hero .container-xl {
+  position: relative;
+  z-index: 2;
+  width: 100%;
 }
 .page-hero h1 {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-size: clamp(2.75rem, 6vw, 5.5rem);
   line-height: 1.1;
   color: var(--cream);
 }
-.page-hero p { color: rgba(250,248,242,0.55); font-size: 1.125rem; line-height: 1.7; margin-top: 1.75rem; max-width: 36rem; }
+.page-hero p { color: rgba(250,248,242,0.7); font-size: 1.125rem; line-height: 1.7; margin-top: 1.5rem; max-width: 32rem; }
 
 /* =============================================
    MENU PAGE

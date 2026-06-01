@@ -909,15 +909,16 @@ button { font-family: inherit; cursor: pointer; }
   position: absolute;
   top: 1.25rem;
   left: 1.25rem;
-  background: var(--brass);
-  color: var(--forest-deep);
+  background: var(--forest-dark);
+  color: var(--cream);
   border-radius: 0.75rem;
   padding: 0.875rem 1.25rem;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
   z-index: 2;
+  border: 1px solid rgba(255,255,255,0.1);
 }
-.ferm-badge p:first-child { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 900; line-height: 1; }
-.ferm-badge p:last-child { font-size: 0.7rem; font-weight: 600; opacity: 0.8; margin-top: 0.25rem; }
+.ferm-badge p:first-child { font-family: 'Playfair Display', serif; font-size: 1.75rem; font-weight: 900; line-height: 1; color: var(--brass-light); }
+.ferm-badge p:last-child { font-size: 0.7rem; font-weight: 600; opacity: 0.9; margin-top: 0.25rem; letter-spacing: 0.05em; text-transform: uppercase; }
 /* Quote — bottom of image, no overlap with badge */
 .ferm-img-quote {
   position: absolute;
@@ -935,8 +936,9 @@ button { font-family: inherit; cursor: pointer; }
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   color: var(--cream);
-  font-size: 0.9375rem;
-  line-height: 1.5;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.6;
 }
 
 /* =============================================

@@ -194,11 +194,11 @@ button { font-family: inherit; cursor: pointer; }
 .reveal { opacity: 0; transform: translateY(32px); will-change: opacity, transform; }
 .reveal.visible { animation: reveal-up 0.75s ease forwards; }
 
-.reveal-left { opacity: 0; transform: translateX(-36px); will-change: opacity, transform; }
-.reveal-left.visible { animation: reveal-from-left 0.75s ease forwards; }
+.reveal-left { opacity: 0; transform: translateY(28px); will-change: opacity, transform; }
+.reveal-left.visible { animation: reveal-up 0.75s ease forwards; }
 
-.reveal-right { opacity: 0; transform: translateX(36px); will-change: opacity, transform; }
-.reveal-right.visible { animation: reveal-from-right 0.75s ease forwards; }
+.reveal-right { opacity: 0; transform: translateY(28px); will-change: opacity, transform; }
+.reveal-right.visible { animation: reveal-up 0.75s ease forwards; }
 
 /* --- Keyframes --- */
 @keyframes reveal-up {

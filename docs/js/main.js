@@ -184,3 +184,48 @@
     if (success) success.classList.add('visible');
   });
 })();
+
+/* --- Home Gallery Carousel --- */
+(function initHomeGalleryCarousel() {
+  const carousel = document.getElementById('galleryCarousel');
+  if (!carousel) return;
+  const prevBtn = document.getElementById('galleryPrev');
+  const nextBtn = document.getElementById('galleryNext');
+  const items = carousel.querySelectorAll('.gallery-carousel-item');
+  let current = 0;
+
+  function getVisible() {
+    if (window.innerWidth >= 1024) return 4;
+    if (window.innerWidth >= 600) return 2;
+    return 1;
+  }
+
+  function getItemWidth() {
+    const gap = 16;
+    return items[0].getBoundingClientRect().width + gap;
+  }
+
+  function maxIndex() {
+    return Math.max(0, items.length - getVisible());
+  }
+
+  function update() {
+    carousel.style.transform = `translateX(-${current * getItemWidth()}px)`;
+    prevBtn.style.opacity = current === 0 ? '0.4' : '1';
+    nextBtn.style.opacity = current >= maxIndex() ? '0.4' : '1';
+  }
+
+  prevBtn.addEventListener('click', () => {
+    if (current > 0) { current--; update(); }
+  });
+  nextBtn.addEventListener('click', () => {
+    if (current < maxIndex()) { current++; update(); }
+  });
+
+  window.addEventListener('resize', () => {
+    current = Math.min(current, maxIndex());
+    update();
+  });
+
+  update();
+})();

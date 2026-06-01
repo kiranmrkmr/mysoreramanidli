@@ -440,9 +440,8 @@
   const loader = document.getElementById('pageLoader');
   if (!loader) return;
 
-  const startTime = Date.now();
-  const MIN_SHOW = 1500; // minimum ms to show loader if it needs to appear
-  const INSTANT_THRESHOLD = 300; // ms — if page loads faster than this, skip loader entirely
+  const LOADER_KEY = 'mri_loader_shown';
+  const SHOW_DURATION = 2000; // ms to show on first visit
 
   function revealHeroElements() {
     document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
@@ -457,29 +456,33 @@
     });
   }
 
+  // Not first visit — hide loader immediately, no flash
+  if (localStorage.getItem(LOADER_KEY)) {
+    loader.style.display = 'none';
+    revealHeroElements();
+    return;
+  }
+
+  // First visit — mark as shown, display for exactly 2s
+  localStorage.setItem(LOADER_KEY, '1');
+
   function hideLoader() {
     loader.classList.add('hidden');
     revealHeroElements();
   }
 
+  const startTime = Date.now();
+
   window.addEventListener('load', () => {
     const elapsed = Date.now() - startTime;
-
-    if (elapsed < INSTANT_THRESHOLD) {
-      // Page loaded instantly — skip loader entirely, no flash
-      loader.style.display = 'none';
-      revealHeroElements();
+    const remaining = SHOW_DURATION - elapsed;
+    if (remaining > 0) {
+      setTimeout(hideLoader, remaining);
     } else {
-      // Page took time — ensure loader shows for at least MIN_SHOW ms
-      const remaining = MIN_SHOW - elapsed;
-      if (remaining > 0) {
-        setTimeout(hideLoader, remaining);
-      } else {
-        hideLoader();
-      }
+      hideLoader();
     }
   });
 
-  // Hard fallback: always hide after 4s
-  setTimeout(hideLoader, 4000);
+  // Hard fallback
+  setTimeout(hideLoader, SHOW_DURATION + 1000);
 })();

@@ -1550,7 +1550,7 @@ footer {
 @media (min-width: 1024px) { .values-grid { grid-template-columns: repeat(4, 1fr); } }
 .value-card { background: white; border-radius: 1rem; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); text-align: center; transition: transform 0.3s, box-shadow 0.3s; }
 .value-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
-.value-icon { width: 2.5rem; height: 2.5rem; margin-bottom: 1rem; color: var(--brass-light); }
+.value-icon { width: 2.5rem; height: 2.5rem; margin: 0 auto 1rem; color: var(--brass-light); }
 .value-icon svg { width: 100%; height: 100%; }
 .value-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--charcoal); margin-bottom: 0.5rem; }
 .value-desc { font-size: 0.875rem; color: var(--mid-gray); line-height: 1.6; }

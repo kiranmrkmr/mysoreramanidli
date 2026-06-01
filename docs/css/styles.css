@@ -1376,14 +1376,15 @@ footer {
   display: flex;
   align-items: flex-end;
   padding-top: 10rem;
-  padding-bottom: 4.5rem;
-  overflow: hidden;
+  padding-bottom: 5.5rem;
+  overflow: visible;
   background: var(--forest-dark);
 }
 .page-hero-bg {
   position: absolute;
   inset: 0;
   z-index: 0;
+  overflow: hidden;
 }
 .page-hero-bg img {
   width: 100%;

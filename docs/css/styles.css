@@ -336,7 +336,7 @@ button { font-family: inherit; cursor: pointer; }
 .navbar.transparent .hamburger span { background: var(--cream); }
 .navbar.scrolled .hamburger span,
 .navbar.inner-page .hamburger span { background: var(--charcoal); }
-.hamburger.open span { background: var(--cream) !important; }
+.hamburger.open span { background: var(--forest-dark) !important; }
 .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
 .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }

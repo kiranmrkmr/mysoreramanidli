@@ -119,8 +119,14 @@
     const hash = window.location.hash.replace('#', '');
     if (hash && Array.from(tabs).some(t => t.dataset.cat === hash)) {
       activateTab(hash);
-      // Scroll to top so tabs bar is visible
-      window.scrollTo({ top: 0, behavior: 'instant' });
+      // Scroll so tabs bar sits just below the navbar
+      const tabsBar = document.querySelector('.menu-tabs-bar');
+      const navbar = document.querySelector('.navbar');
+      if (tabsBar) {
+        const navHeight = navbar ? navbar.getBoundingClientRect().height : 0;
+        const tabsTop = tabsBar.getBoundingClientRect().top + window.scrollY - navHeight;
+        window.scrollTo({ top: tabsTop, behavior: 'smooth' });
+      }
     }
   }
 

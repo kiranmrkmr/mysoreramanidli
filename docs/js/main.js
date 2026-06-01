@@ -434,3 +434,14 @@
   scroll.addEventListener('scroll', updateArrows, { passive: true });
   updateArrows(); // set initial state
 })();
+
+/* --- Page Loader --- */
+(function initPageLoader() {
+  const loader = document.getElementById('pageLoader');
+  if (!loader) return;
+  window.addEventListener('load', () => {
+    loader.classList.add('hidden');
+  });
+  // Fallback: hide after 3s even if load event is slow
+  setTimeout(() => loader.classList.add('hidden'), 3000);
+})();

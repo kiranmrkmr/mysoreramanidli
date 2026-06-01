@@ -581,7 +581,7 @@ button { font-family: inherit; cursor: pointer; }
   box-shadow: 0 20px 60px rgba(0,0,0,0.4);
   display: none;
 }
-@media (min-width: 768px) { .float-circle { display: block; } }
+@media (min-width: 1024px) { .float-circle { display: block; } }
 .float-circle img { width: 100%; height: 100%; object-fit: cover; }
 .float-1 { width: 12rem; height: 12rem; top: 16%; right: 5%; animation: float 6s ease-in-out infinite; }
 .float-2 { width: 8rem; height: 8rem; top: 55%; right: 16%; animation: float-delayed 5s ease-in-out infinite 1s; }
@@ -2037,4 +2037,31 @@ footer {
     padding-top: 4rem !important;
     padding-bottom: 4rem !important;
   }
+}
+
+/* =============================================
+   PAGE LOADER
+   ============================================= */
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--forest-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.page-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.page-loader-logo {
+  height: 9rem;
+  width: auto;
+  animation: loader-pulse 1.4s ease-in-out infinite;
+}
+@keyframes loader-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.6; transform: scale(0.95); }
 }

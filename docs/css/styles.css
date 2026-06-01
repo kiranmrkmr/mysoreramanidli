@@ -1342,7 +1342,7 @@ footer {
   .footer-grid { grid-template-columns: 1.6fr 1fr 1fr 1.2fr; gap: 3.5rem; }
 }
 .footer-brand-logo {
-  height: 4.5rem;
+  height: 8.5rem;
   width: auto;
   opacity: 0.9;
   margin-bottom: 1.5rem;

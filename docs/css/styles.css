@@ -2015,3 +2015,23 @@ footer {
 }
 .order-modal-submit:hover { background: #1ebe5d; transform: translateY(-1px); }
 .order-modal-submit:active { transform: translateY(0); }
+
+/* =============================================
+   MOBILE SECTION PADDING OVERRIDE
+   ============================================= */
+@media (max-width: 767px) {
+  .dishes-section,
+  .why-section,
+  .story-section,
+  .ferm-section,
+  .gallery-preview-section,
+  .reviews-section,
+  .locations-preview-section,
+  .cta-body,
+  .about-story,
+  .values-section,
+  .timeline-section,
+  .about-cta,
+  .gallery-masonry-section,
+  .contact-section { padding-top: 4rem; padding-bottom: 4rem; }
+}

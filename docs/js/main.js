@@ -114,20 +114,19 @@
     });
   });
 
-  // Activate tab from URL hash on page load
-  function checkHash() {
+  // Activate tab from URL hash
+  function checkHash(smooth) {
     const hash = window.location.hash.replace('#', '');
     if (hash && Array.from(tabs).some(t => t.dataset.cat === hash)) {
       activateTab(hash);
-      // Scroll to top so sticky tabs bar + content are visible from the start
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'instant' });
     }
   }
 
-  // Run on load and when hash changes (same-page footer link clicks)
-  document.addEventListener('DOMContentLoaded', checkHash);
-  window.addEventListener('load', checkHash);
-  window.addEventListener('hashchange', checkHash);
+  // On initial page load — instant jump
+  window.addEventListener('load', () => checkHash(false));
+  // On same-page hash change (footer clicked while on menu page) — smooth scroll
+  window.addEventListener('hashchange', () => checkHash(true));
 })();
 
 /* --- Gallery Filter --- */

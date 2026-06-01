@@ -1309,7 +1309,7 @@ footer {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   color: var(--brass-light);
-  font-size: 1.1rem;
+  font-size: 1.6rem;
   line-height: 1.5;
 }
 .footer-social { display: flex; gap: 0.875rem; }

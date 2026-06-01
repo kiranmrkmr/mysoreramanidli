@@ -343,9 +343,25 @@
   }
 
   // Open modal on dish order button click
+  // Name/price can come from data attributes OR from sibling DOM elements in the card
   document.querySelectorAll('[data-dish]').forEach(btn => {
     btn.addEventListener('click', () => {
-      openModal(btn.dataset.name, btn.dataset.price);
+      // Try data attributes first (home page dish cards)
+      let name = btn.dataset.name;
+      let price = btn.dataset.price;
+
+      // Fallback: read from nearest card's name/price elements (menu page)
+      if (!name) {
+        const card = btn.closest('.menu-card, .dish-card');
+        if (card) {
+          const nameEl = card.querySelector('.menu-card-name, .dish-name');
+          const priceEl = card.querySelector('.menu-card-price, .dish-price');
+          if (nameEl) name = nameEl.textContent.trim();
+          if (priceEl) price = priceEl.textContent.replace(/[^\d]/g, '');
+        }
+      }
+
+      if (name && price) openModal(name, price);
     });
   });
 

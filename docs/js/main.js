@@ -98,18 +98,13 @@
   const tabs = document.querySelectorAll('.menu-tab');
   if (!tabs.length) return;
 
-  const tabsBar = document.querySelector('.menu-tabs-bar');
   const navbar = document.querySelector('.navbar');
-
-  // Store the natural (non-sticky) top position of the tabs bar on load
-  let tabsBarNaturalTop = 0;
-  window.addEventListener('load', () => {
-    tabsBarNaturalTop = tabsBar ? tabsBar.getBoundingClientRect().top + window.scrollY : 0;
-  });
+  const anchor = document.getElementById('menu-anchor');
 
   function getScrollTarget() {
     const navH = navbar ? navbar.offsetHeight : 0;
-    return tabsBarNaturalTop - navH;
+    // Use the non-sticky sentinel anchor for reliable position
+    return anchor ? anchor.offsetTop - navH : 0;
   }
 
   function activateTab(cat) {

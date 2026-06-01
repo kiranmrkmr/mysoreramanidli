@@ -402,3 +402,23 @@
     if (e.key === 'Escape' && backdrop.classList.contains('open')) closeModal();
   });
 })();
+
+/* --- Reviews Carousel Arrows --- */
+(function initReviewsArrows() {
+  const scroll = document.getElementById('reviewsScroll');
+  const prevBtn = document.getElementById('reviewsPrev');
+  const nextBtn = document.getElementById('reviewsNext');
+  if (!scroll || !prevBtn || !nextBtn) return;
+
+  function getScrollAmount() {
+    const card = scroll.querySelector('.review-card');
+    return card ? card.offsetWidth + 20 : 320;
+  }
+
+  prevBtn.addEventListener('click', () => {
+    scroll.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+  });
+  nextBtn.addEventListener('click', () => {
+    scroll.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+  });
+})();

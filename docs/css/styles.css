@@ -1415,6 +1415,9 @@ footer {
   line-height: 1.1;
   color: var(--cream);
 }
+.page-hero h1 .text-gradient-gold {
+  padding-left: 5px;
+}
 .page-hero p { color: rgba(250,248,242,0.7); font-size: 1.125rem; line-height: 1.7; margin-top: 1.5rem; max-width: 32rem; }
 
 /* =============================================

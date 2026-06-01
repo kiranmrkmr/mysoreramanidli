@@ -129,10 +129,26 @@
     }
   }
 
-  // On initial page load — instant jump
+  // On initial page load — instant jump to tabs bar
   window.addEventListener('load', () => checkHash(false));
-  // On same-page hash change (footer clicked while on menu page) — smooth scroll
-  window.addEventListener('hashchange', () => checkHash(true));
+
+  // Intercept footer menu links when already on menu page
+  document.querySelectorAll('a[href^="menu.html#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const hash = link.getAttribute('href').split('#')[1];
+      if (Array.from(tabs).some(t => t.dataset.cat === hash)) {
+        history.pushState(null, '', '#' + hash);
+        activateTab(hash);
+        const tabsBar = document.querySelector('.menu-tabs-bar');
+        const navbar = document.querySelector('.navbar');
+        if (tabsBar) {
+          const navH = navbar ? navbar.offsetHeight : 0;
+          window.scrollTo({ top: tabsBar.offsetTop - navH, behavior: 'smooth' });
+        }
+      }
+    });
+  });
 })();
 
 /* --- Gallery Filter --- */

@@ -440,9 +440,11 @@
   const loader = document.getElementById('pageLoader');
   if (!loader) return;
 
-  function hideLoader() {
-    loader.classList.add('hidden');
-    // Instantly show any reveal elements already in the viewport (no animation)
+  const startTime = Date.now();
+  const MIN_SHOW = 1500; // minimum ms to show loader if it needs to appear
+  const INSTANT_THRESHOLD = 300; // ms — if page loads faster than this, skip loader entirely
+
+  function revealHeroElements() {
     document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
       const rect = el.getBoundingClientRect();
       if (rect.top < window.innerHeight && rect.bottom > 0) {
@@ -455,7 +457,29 @@
     });
   }
 
-  window.addEventListener('load', hideLoader);
-  // Fallback: hide after 3s even if load event is slow
-  setTimeout(hideLoader, 3000);
+  function hideLoader() {
+    loader.classList.add('hidden');
+    revealHeroElements();
+  }
+
+  window.addEventListener('load', () => {
+    const elapsed = Date.now() - startTime;
+
+    if (elapsed < INSTANT_THRESHOLD) {
+      // Page loaded instantly — skip loader entirely, no flash
+      loader.style.display = 'none';
+      revealHeroElements();
+    } else {
+      // Page took time — ensure loader shows for at least MIN_SHOW ms
+      const remaining = MIN_SHOW - elapsed;
+      if (remaining > 0) {
+        setTimeout(hideLoader, remaining);
+      } else {
+        hideLoader();
+      }
+    }
+  });
+
+  // Hard fallback: always hide after 4s
+  setTimeout(hideLoader, 4000);
 })();

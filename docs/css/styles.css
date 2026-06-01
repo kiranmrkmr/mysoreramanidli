@@ -454,6 +454,11 @@ button { font-family: inherit; cursor: pointer; }
   display: flex;
   align-items: center;
   gap: 1rem;
+  line-height: 1;
+}
+.hero-headline-row span {
+  display: flex;
+  align-items: center;
 }
 .hero-pill {
   display: block;

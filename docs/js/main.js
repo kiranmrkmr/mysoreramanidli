@@ -415,10 +415,22 @@
     return card ? card.offsetWidth + 20 : 320;
   }
 
+  function updateArrows() {
+    const atStart = scroll.scrollLeft <= 4;
+    const atEnd = scroll.scrollLeft + scroll.clientWidth >= scroll.scrollWidth - 4;
+    prevBtn.style.opacity = atStart ? '0.4' : '1';
+    prevBtn.style.pointerEvents = atStart ? 'none' : 'auto';
+    nextBtn.style.opacity = atEnd ? '0.4' : '1';
+    nextBtn.style.pointerEvents = atEnd ? 'none' : 'auto';
+  }
+
   prevBtn.addEventListener('click', () => {
     scroll.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
   });
   nextBtn.addEventListener('click', () => {
     scroll.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
   });
+
+  scroll.addEventListener('scroll', updateArrows, { passive: true });
+  updateArrows(); // set initial state
 })();

@@ -841,8 +841,10 @@ button { font-family: inherit; cursor: pointer; }
 .story-text .accent-text {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-  font-size: 1.125rem;
+  font-size: 1.3rem;
   color: var(--charcoal);
+  font-weight: 600;
+  line-height: 1.7;
 }
 
 /* =============================================

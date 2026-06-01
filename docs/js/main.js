@@ -98,22 +98,30 @@
   const tabs = document.querySelectorAll('.menu-tab');
   if (!tabs.length) return;
 
+  function activateTab(cat) {
+    tabs.forEach(t => t.classList.remove('active'));
+    const match = Array.from(tabs).find(t => t.dataset.cat === cat);
+    if (match) match.classList.add('active');
+    document.querySelectorAll('.menu-items-section').forEach(section => {
+      section.style.display = section.dataset.cat === cat ? 'grid' : 'none';
+    });
+  }
+
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      const target = tab.dataset.cat;
-      // Update active tab
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      // Show/hide sections
-      document.querySelectorAll('.menu-items-section').forEach(section => {
-        if (section.dataset.cat === target) {
-          section.style.display = 'grid';
-        } else {
-          section.style.display = 'none';
-        }
-      });
+      activateTab(tab.dataset.cat);
+      history.replaceState(null, '', '#' + tab.dataset.cat);
     });
   });
+
+  // Activate tab from URL hash on page load
+  const hash = window.location.hash.replace('#', '');
+  if (hash && Array.from(tabs).some(t => t.dataset.cat === hash)) {
+    activateTab(hash);
+    setTimeout(() => {
+      document.querySelector('.menu-tabs-bar')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
 })();
 
 /* --- Gallery Filter --- */

@@ -961,7 +961,7 @@ button { font-family: inherit; cursor: pointer; }
   position: relative;
   overflow: hidden;
   border-radius: 0.875rem;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1 / 1;
   cursor: pointer;
 }
 @media (max-width: 1023px) {
@@ -1375,7 +1375,7 @@ footer {
   padding-top: 8rem;
   padding-bottom: 4rem;
   background: var(--forest-dark);
-  overflow: hidden;
+  overflow: visible;
 }
 .page-hero-blob {
   position: absolute;

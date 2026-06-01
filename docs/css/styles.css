@@ -435,7 +435,7 @@ button { font-family: inherit; cursor: pointer; }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 130px;
+  padding-top: 145px;
   padding-bottom: 4rem;
 }
 @media (min-width: 768px) {
@@ -445,7 +445,10 @@ button { font-family: inherit; cursor: pointer; }
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 15px;
+}
+@media (min-width: 768px) {
+  .hero-eyebrow { margin-bottom: 2rem; }
 }
 .hero-eyebrow-line { width: 1.75rem; height: 1px; background: rgba(196,150,42,0.5); }
 .hero-eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--brass); }

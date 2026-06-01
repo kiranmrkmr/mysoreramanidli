@@ -304,3 +304,85 @@
 
   update();
 })();
+
+/* --- Order Modal (WhatsApp) --- */
+(function initOrderModal() {
+  const backdrop = document.getElementById('orderModalBackdrop');
+  if (!backdrop) return;
+
+  const closeBtn = document.getElementById('orderModalClose');
+  const titleEl  = document.getElementById('orderModalTitle');
+  const priceEl  = backdrop.querySelector('.order-modal-price');
+  const qtyInput = document.getElementById('orderQty');
+  const minusBtn = document.getElementById('orderQtyMinus');
+  const plusBtn  = document.getElementById('orderQtyPlus');
+  const totalEl  = document.getElementById('orderTotal');
+  const submitBtn = document.getElementById('orderModalSubmit');
+
+  const WHATSAPP_NUMBER = '919633299529';
+  let currentDish = { name: '', price: 0 };
+
+  function updateTotal() {
+    const qty = parseInt(qtyInput.value) || 1;
+    totalEl.textContent = '₹' + (currentDish.price * qty);
+  }
+
+  function openModal(name, price) {
+    currentDish = { name, price: parseInt(price) };
+    titleEl.textContent = name;
+    priceEl.textContent = '₹' + price + ' per plate';
+    qtyInput.value = 1;
+    updateTotal();
+    backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Open modal on dish order button click
+  document.querySelectorAll('[data-dish]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      openModal(btn.dataset.name, btn.dataset.price);
+    });
+  });
+
+  // Quantity controls
+  minusBtn.addEventListener('click', () => {
+    const v = parseInt(qtyInput.value) || 1;
+    if (v > 1) { qtyInput.value = v - 1; updateTotal(); }
+  });
+  plusBtn.addEventListener('click', () => {
+    const v = parseInt(qtyInput.value) || 1;
+    if (v < 20) { qtyInput.value = v + 1; updateTotal(); }
+  });
+
+  // Send to WhatsApp
+  submitBtn.addEventListener('click', () => {
+    const qty = parseInt(qtyInput.value) || 1;
+    const total = currentDish.price * qty;
+    const msg =
+      `Hello! I'd like to place an order from Mysore Raman Idli 🍽️\n\n` +
+      `*Item:* ${currentDish.name}\n` +
+      `*Quantity:* ${qty} plate${qty > 1 ? 's' : ''}\n` +
+      `*Price per plate:* ₹${currentDish.price}\n` +
+      `*Total:* ₹${total}\n\n` +
+      `Please confirm my order. Thank you!`;
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+    closeModal();
+  });
+
+  // Close on backdrop click or close button
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', e => {
+    if (e.target === backdrop) closeModal();
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && backdrop.classList.contains('open')) closeModal();
+  });
+})();

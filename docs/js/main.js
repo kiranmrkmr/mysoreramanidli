@@ -439,9 +439,23 @@
 (function initPageLoader() {
   const loader = document.getElementById('pageLoader');
   if (!loader) return;
-  window.addEventListener('load', () => {
+
+  function hideLoader() {
     loader.classList.add('hidden');
-  });
+    // Instantly show any reveal elements already in the viewport (no animation)
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.style.transition = 'none';
+        el.style.animation = 'none';
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+        el.classList.add('visible');
+      }
+    });
+  }
+
+  window.addEventListener('load', hideLoader);
   // Fallback: hide after 3s even if load event is slow
-  setTimeout(() => loader.classList.add('hidden'), 3000);
+  setTimeout(hideLoader, 3000);
 })();

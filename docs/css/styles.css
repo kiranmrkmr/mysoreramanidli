@@ -673,7 +673,20 @@ button { font-family: inherit; cursor: pointer; }
   color: rgba(255,255,255,0.025);
   user-select: none;
 }
-.why-intro { max-width: 40rem; margin-bottom: 4rem; }
+.why-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+@media (min-width: 1024px) {
+  .why-layout {
+    grid-template-columns: 1fr 2.5fr;
+    gap: 4rem;
+    align-items: center;
+  }
+}
+.why-intro { max-width: 28rem; }
 .why-intro h2 {
   font-family: 'Playfair Display', serif;
   font-size: clamp(2rem, 4.5vw, 3.8rem);

@@ -98,6 +98,20 @@
   const tabs = document.querySelectorAll('.menu-tab');
   if (!tabs.length) return;
 
+  const tabsBar = document.querySelector('.menu-tabs-bar');
+  const navbar = document.querySelector('.navbar');
+
+  // Store the natural (non-sticky) top position of the tabs bar on load
+  let tabsBarNaturalTop = 0;
+  window.addEventListener('load', () => {
+    tabsBarNaturalTop = tabsBar ? tabsBar.getBoundingClientRect().top + window.scrollY : 0;
+  });
+
+  function getScrollTarget() {
+    const navH = navbar ? navbar.offsetHeight : 0;
+    return tabsBarNaturalTop - navH;
+  }
+
   function activateTab(cat) {
     tabs.forEach(t => t.classList.remove('active'));
     const match = Array.from(tabs).find(t => t.dataset.cat === cat);
@@ -114,23 +128,14 @@
     });
   });
 
-  // Activate tab from URL hash
-  function checkHash(smooth) {
+  // On initial page load — activate tab from hash, instant scroll
+  window.addEventListener('load', () => {
     const hash = window.location.hash.replace('#', '');
     if (hash && Array.from(tabs).some(t => t.dataset.cat === hash)) {
       activateTab(hash);
-      const tabsBar = document.querySelector('.menu-tabs-bar');
-      const navbar = document.querySelector('.navbar');
-      if (tabsBar) {
-        const navH = navbar ? navbar.offsetHeight : 0;
-        const scrollTarget = tabsBar.offsetTop - navH;
-        window.scrollTo({ top: scrollTarget, behavior: smooth ? 'smooth' : 'instant' });
-      }
+      window.scrollTo({ top: getScrollTarget(), behavior: 'instant' });
     }
-  }
-
-  // On initial page load — instant jump to tabs bar
-  window.addEventListener('load', () => checkHash(false));
+  });
 
   // Intercept footer menu links when already on menu page
   document.querySelectorAll('a[href^="menu.html#"]').forEach(link => {
@@ -140,12 +145,7 @@
       if (Array.from(tabs).some(t => t.dataset.cat === hash)) {
         history.pushState(null, '', '#' + hash);
         activateTab(hash);
-        const tabsBar = document.querySelector('.menu-tabs-bar');
-        const navbar = document.querySelector('.navbar');
-        if (tabsBar) {
-          const navH = navbar ? navbar.offsetHeight : 0;
-          window.scrollTo({ top: tabsBar.offsetTop - navH, behavior: 'smooth' });
-        }
+        window.scrollTo({ top: getScrollTarget(), behavior: 'smooth' });
       }
     });
   });

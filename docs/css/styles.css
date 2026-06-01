@@ -469,7 +469,7 @@ button { font-family: inherit; cursor: pointer; }
   flex-shrink: 0;
   width: clamp(80px, 18vw, 110px);
   height: clamp(40px, 9vw, 55px);
-  transform: translateY(-15%);
+  transform: translateY(15%);
 }
 @media (min-width: 768px) {
   .hero-pill {

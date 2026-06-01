@@ -508,6 +508,8 @@ button { font-family: inherit; cursor: pointer; }
   .hero-sub p { font-size: 1.125rem; }
 }
 .hero-btns { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.hero-order-online { display: none; }
+@media (min-width: 768px) { .hero-order-online { display: inline-flex; } }
 .hero-scroll {
   position: relative;
   z-index: 2;
@@ -1316,6 +1318,12 @@ footer {
   display: grid;
   grid-template-columns: 1fr;
   gap: 3rem;
+}
+/* On mobile: brand full-width, then Explore+Menu side by side, then Locations */
+@media (max-width: 767px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid > div:first-child { grid-column: 1 / -1; }
+  .footer-grid > div:last-child  { grid-column: 1 / -1; }
 }
 @media (min-width: 768px) {
   .footer-grid { grid-template-columns: repeat(2, 1fr); padding: 4.5rem 3rem; }

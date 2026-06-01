@@ -119,11 +119,12 @@
     const hash = window.location.hash.replace('#', '');
     if (hash && Array.from(tabs).some(t => t.dataset.cat === hash)) {
       activateTab(hash);
+      // Scroll to top so tabs bar is visible
+      window.scrollTo({ top: 0, behavior: 'instant' });
     }
   }
 
-  // Run immediately and also after DOM + resources settle
-  checkHash();
+  // Run on load
   document.addEventListener('DOMContentLoaded', checkHash);
   window.addEventListener('load', checkHash);
 })();

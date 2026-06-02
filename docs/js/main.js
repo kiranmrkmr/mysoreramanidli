@@ -561,7 +561,7 @@ function initPage() {
       // Sweep the curtain over the current page (hides dark body)
       async leave() {
         curtainIn();
-        await new Promise(r => setTimeout(r, 190)); // wait for curtain fade-in
+        await new Promise(r => setTimeout(r, 220)); // wait for curtain fully opaque
       },
 
       // New page content loads behind the curtain — no flash
@@ -573,12 +573,12 @@ function initPage() {
       async afterEnter({ next }) {
         updateNavForNamespace(next.namespace);
         initPage();
-        // Wait for the browser to fully paint the new page before lifting curtain
-        await new Promise(r => setTimeout(r, 80));
-        curtain.style.transition = 'opacity 0.3s cubic-bezier(0.25,0.46,0.45,0.94)';
+        // Hold until browser has fully painted the new page, then lift
+        await new Promise(r => setTimeout(r, 180));
+        curtain.style.transition = 'opacity 0.4s cubic-bezier(0.25,0.46,0.45,0.94)';
         curtainOut();
-        await new Promise(r => setTimeout(r, 310));
-        curtain.style.transition = 'opacity 0.18s ease'; // reset for next leave
+        await new Promise(r => setTimeout(r, 420));
+        curtain.style.transition = 'opacity 0.22s ease'; // reset for next leave
       }
     }]
   });

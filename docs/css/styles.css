@@ -1827,6 +1827,7 @@ footer {
 .loc-features { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.75rem 0; }
 .loc-feature-tag { padding: 0.25rem 0.75rem; border-radius: 9999px; background: var(--ivory); color: var(--mid-gray); font-size: 0.75rem; font-weight: 500; }
 .loc-action-btns { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+@media (max-width: 375px) { .loc-action-btns { flex-wrap: nowrap; } .loc-action-btn { flex: 1; justify-content: center; } }
 .loc-action-btn {
   display: inline-flex;
   align-items: center;

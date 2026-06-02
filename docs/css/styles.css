@@ -33,8 +33,18 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* During Barba transition: cream bg so fading container never exposes dark green */
+/* Barba page transitions */
 body.barba-transitioning { background: var(--cream); }
+@keyframes barba-fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+@keyframes barba-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.barba-leave { animation: barba-fade-out 0.3s ease forwards; }
+.barba-enter { animation: barba-fade-in  0.4s ease both; }
 img { max-width: 100%; height: auto; display: block; }
 a { text-decoration: none; color: inherit; }
 button { font-family: inherit; cursor: pointer; }

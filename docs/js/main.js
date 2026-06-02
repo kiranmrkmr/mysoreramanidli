@@ -542,18 +542,18 @@ function initPage() {
 
       // Fade out current page
       async leave({ current }) {
-        current.container.style.transition = 'opacity 0.25s ease';
+        current.container.style.transition = 'opacity 0.15s ease';
         current.container.style.opacity    = '0';
-        await new Promise(r => setTimeout(r, 260));
+        await new Promise(r => setTimeout(r, 150));
       },
 
       // Fade in next page
       async enter({ next }) {
         next.container.style.opacity    = '0';
-        next.container.style.transition = 'opacity 0.3s ease';
+        next.container.style.transition = 'opacity 0.18s ease';
         await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
         next.container.style.opacity = '1';
-        await new Promise(r => setTimeout(r, 310));
+        await new Promise(r => setTimeout(r, 185));
         // Remove inline styles so they don't interfere with reveal animations
         next.container.style.removeProperty('opacity');
         next.container.style.removeProperty('transition');

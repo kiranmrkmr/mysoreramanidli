@@ -21,7 +21,7 @@
   <link rel="icon" href="images/favicon.png" type="image/png" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body>
+<body data-barba="wrapper">
 
 <!-- ===== PAGE LOADER ===== -->
 <div class="page-loader" id="pageLoader">
@@ -59,7 +59,7 @@
   <a href="menu.html" class="nav-drawer-order">Order Now</a>
 </nav>
 
-<main>
+<main data-barba="container" data-barba-namespace="home">
 
 <!-- ===== HERO ===== -->
 <section class="hero grain">
@@ -797,6 +797,7 @@
   </div>
 </footer>
 
+<script src="https://unpkg.com/@barba/core@2.10.3/dist/barba.umd.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

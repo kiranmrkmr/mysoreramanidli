@@ -2,25 +2,19 @@
    MYSORE RAMAN IDLI — Main JavaScript
    ============================================= */
 
-
-/* --- Navbar --- */
-(function initNavbar() {
+/* -----------------------------------------------
+   NAVBAR (runs once — persists across transitions)
+   ----------------------------------------------- */
+function initNavbar() {
   const navbar = document.querySelector('.navbar');
   if (!navbar) return;
 
-  const isInnerPage = navbar.classList.contains('inner-page');
   const hamburger = navbar.querySelector('.hamburger');
-  const drawer = document.querySelector('.nav-drawer');
-  const overlay = document.querySelector('.nav-overlay');
+  const drawer    = document.querySelector('.nav-drawer');
+  const overlay   = document.querySelector('.nav-overlay');
 
-  // Set initial state
-  if (!isInnerPage) {
-    navbar.classList.add('transparent');
-  }
-
-  // Scroll handler
   function onScroll() {
-    if (isInnerPage) return;
+    if (navbar.classList.contains('inner-page')) return;
     if (window.scrollY > 50) {
       navbar.classList.remove('transparent');
       navbar.classList.add('scrolled');
@@ -32,7 +26,6 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  // Hamburger
   if (hamburger && drawer && overlay) {
     function openDrawer() {
       hamburger.classList.add('open');
@@ -53,54 +46,92 @@
     overlay.addEventListener('click', closeDrawer);
     drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
   }
-})();
+}
 
-/* --- Scroll Reveal (IntersectionObserver) --- */
-(function initReveal() {
+/* -----------------------------------------------
+   Update navbar appearance + active link per page
+   ----------------------------------------------- */
+function updateNavForNamespace(namespace) {
+  const navbar  = document.querySelector('.navbar');
+  const navLinks = document.querySelectorAll('.nav-links a:not(.nav-order), .nav-drawer a:not(.nav-drawer-order)');
+
+  if (!navbar) return;
+
+  if (namespace === 'home') {
+    navbar.classList.remove('inner-page');
+    if (window.scrollY <= 50) {
+      navbar.classList.add('transparent');
+      navbar.classList.remove('scrolled');
+    }
+  } else {
+    navbar.classList.add('inner-page');
+    navbar.classList.remove('transparent');
+    navbar.classList.remove('scrolled');
+  }
+
+  // Map namespace → filename
+  const nsMap = {
+    home:      'index.html',
+    menu:      'menu.html',
+    about:     'about.html',
+    gallery:   'gallery.html',
+    locations: 'locations.html',
+    contact:   'contact.html',
+  };
+  const targetFile = nsMap[namespace] || '';
+
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href') || '';
+    const base = href.split('#')[0];
+    link.classList.toggle('active', base === targetFile);
+  });
+}
+
+/* -----------------------------------------------
+   Scroll Reveal (IntersectionObserver)
+   ----------------------------------------------- */
+function initReveal() {
   const els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
   if (!els.length) return;
 
-  // Apply stagger delays from data-delay (used as animation-delay on .visible)
+  // Reset any previously-visible state so reveals re-animate on new page
   els.forEach(el => {
-    const delay = el.dataset.delay;
-    if (delay) el.dataset.animDelay = delay;
+    el.classList.remove('visible');
+    el.style.removeProperty('animation-delay');
+    el.style.removeProperty('transition');
+    el.style.removeProperty('animation');
+    el.style.removeProperty('opacity');
+    el.style.removeProperty('transform');
   });
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        // Double rAF ensures browser has painted opacity:0 before transitioning
         const el = entry.target;
-        const delay = el.dataset.animDelay;
+        const delay = el.dataset.delay || el.dataset.animDelay;
         if (delay) el.style.animationDelay = delay + 's';
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            el.classList.add('visible');
-          });
-        });
-        observer.unobserve(entry.target);
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          el.classList.add('visible');
+        }));
+        observer.unobserve(el);
       }
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-  // Let browser paint opacity:0 first, then trigger transitions
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      els.forEach(el => {
-        observer.observe(el);
-      });
-    });
-  });
-})();
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    els.forEach(el => observer.observe(el));
+  }));
+}
 
-/* --- Menu Page Tabs --- */
-(function initMenuTabs() {
+/* -----------------------------------------------
+   Menu Page Tabs
+   ----------------------------------------------- */
+function initMenuTabs() {
   const tabs = document.querySelectorAll('.menu-tab');
   if (!tabs.length) return;
 
-  const navbar  = document.querySelector('.navbar');
-  const anchor  = document.getElementById('menu-anchor');
-  const tabsBar = document.querySelector('.menu-tabs-bar');
+  const navbar     = document.querySelector('.navbar');
+  const anchor     = document.getElementById('menu-anchor');
   const tabsScroll = document.querySelector('.menu-tabs');
 
   function getScrollTarget() {
@@ -108,7 +139,6 @@
     return anchor ? anchor.offsetTop - navH : 0;
   }
 
-  // Scroll the active tab button into view inside the horizontal tab bar
   function scrollTabIntoView(tabEl) {
     if (!tabsScroll || !tabEl) return;
     const barRect = tabsScroll.getBoundingClientRect();
@@ -140,29 +170,29 @@
     });
   });
 
-  // On initial page load — activate tab from hash, instant scroll
-  window.addEventListener('load', () => {
-    const hash = window.location.hash.replace('#', '');
-    if (hash && Array.from(tabs).some(t => t.dataset.cat === hash)) {
-      activateTab(hash, true, 'instant');
-    }
-  });
+  // Activate from hash immediately (handles both initial load and Barba enter)
+  const hash = window.location.hash.replace('#', '');
+  if (hash && Array.from(tabs).some(t => t.dataset.cat === hash)) {
+    activateTab(hash, true, 'instant');
+  }
 
   // Intercept footer menu links when already on menu page
   document.querySelectorAll('a[href^="menu.html#"]').forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
-      const hash = link.getAttribute('href').split('#')[1];
-      if (Array.from(tabs).some(t => t.dataset.cat === hash)) {
-        history.pushState(null, '', '#' + hash);
-        activateTab(hash, true, 'smooth');
+      const h = link.getAttribute('href').split('#')[1];
+      if (Array.from(tabs).some(t => t.dataset.cat === h)) {
+        history.pushState(null, '', '#' + h);
+        activateTab(h, true, 'smooth');
       }
     });
   });
-})();
+}
 
-/* --- Gallery Filter --- */
-(function initGalleryFilter() {
+/* -----------------------------------------------
+   Gallery Filter
+   ----------------------------------------------- */
+function initGalleryFilter() {
   const btns = document.querySelectorAll('.gallery-filter-btn');
   if (!btns.length) return;
 
@@ -171,27 +201,24 @@
       const cat = btn.dataset.cat;
       btns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-
       document.querySelectorAll('.gallery-masonry-item').forEach(item => {
-        if (cat === 'All' || item.dataset.cat === cat) {
-          item.style.display = 'block';
-        } else {
-          item.style.display = 'none';
-        }
+        item.style.display = (cat === 'All' || item.dataset.cat === cat) ? 'block' : 'none';
       });
     });
   });
-})();
+}
 
-/* --- Lightbox --- */
-(function initLightbox() {
+/* -----------------------------------------------
+   Lightbox
+   ----------------------------------------------- */
+function initLightbox() {
   const lightbox = document.querySelector('.lightbox');
   if (!lightbox) return;
 
   const lightboxImg = lightbox.querySelector('img');
-  const closeBtn = lightbox.querySelector('.lightbox-close');
-  const prevBtn = lightbox.querySelector('.lightbox-prev');
-  const nextBtn = lightbox.querySelector('.lightbox-next');
+  const closeBtn    = lightbox.querySelector('.lightbox-close');
+  const prevBtn     = lightbox.querySelector('.lightbox-prev');
+  const nextBtn     = lightbox.querySelector('.lightbox-next');
 
   let items = [];
   let currentIndex = 0;
@@ -199,10 +226,7 @@
   function openLightbox(index) {
     currentIndex = index;
     const img = items[currentIndex].querySelector('img');
-    if (img) {
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt;
-    }
+    if (img) { lightboxImg.src = img.src; lightboxImg.alt = img.alt; }
     lightbox.classList.add('open');
     document.body.style.overflow = 'hidden';
     updateNavBtns();
@@ -213,24 +237,17 @@
     if (nextBtn) nextBtn.style.opacity = currentIndex === items.length - 1 ? '0.3' : '1';
   }
 
-  function showPrev() {
-    if (currentIndex > 0) openLightbox(currentIndex - 1);
-  }
-
-  function showNext() {
-    if (currentIndex < items.length - 1) openLightbox(currentIndex + 1);
-  }
+  function showPrev() { if (currentIndex > 0) openLightbox(currentIndex - 1); }
+  function showNext() { if (currentIndex < items.length - 1) openLightbox(currentIndex + 1); }
 
   function closeLightbox() {
     lightbox.classList.remove('open');
     document.body.style.overflow = '';
   }
 
-  // Collect visible items (respects filter)
   function refreshItems() {
-    items = Array.from(document.querySelectorAll('.gallery-masonry-item')).filter(
-      el => el.style.display !== 'none'
-    );
+    items = Array.from(document.querySelectorAll('.gallery-masonry-item'))
+      .filter(el => el.style.display !== 'none');
   }
 
   document.querySelectorAll('.gallery-masonry-item').forEach(item => {
@@ -241,14 +258,13 @@
     });
   });
 
-  // Also refresh items when filter changes
   document.querySelectorAll('.gallery-filter-btn').forEach(btn => {
     btn.addEventListener('click', () => { items = []; });
   });
 
   if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
-  if (prevBtn) prevBtn.addEventListener('click', e => { e.stopPropagation(); showPrev(); });
-  if (nextBtn) nextBtn.addEventListener('click', e => { e.stopPropagation(); showNext(); });
+  if (prevBtn)  prevBtn.addEventListener('click', e => { e.stopPropagation(); showPrev(); });
+  if (nextBtn)  nextBtn.addEventListener('click', e => { e.stopPropagation(); showNext(); });
 
   lightbox.addEventListener('click', e => {
     if (e.target === lightbox || e.target === lightboxImg.parentElement) closeLightbox();
@@ -260,44 +276,45 @@
     if (e.key === 'ArrowLeft') showPrev();
     if (e.key === 'ArrowRight') showNext();
   });
-})();
+}
 
-/* --- Contact Form --- */
-(function initContactForm() {
-  const form = document.querySelector('.contact-form');
+/* -----------------------------------------------
+   Contact Form
+   ----------------------------------------------- */
+function initContactForm() {
+  const form    = document.querySelector('.contact-form');
   if (!form) return;
-
   const success = document.querySelector('.form-success');
   form.addEventListener('submit', e => {
     e.preventDefault();
     form.style.display = 'none';
     if (success) success.classList.add('visible');
   });
-})();
+}
 
-/* --- Home Gallery Carousel --- */
-(function initHomeGalleryCarousel() {
+/* -----------------------------------------------
+   Home Gallery Carousel
+   ----------------------------------------------- */
+function initHomeGalleryCarousel() {
   const carousel = document.getElementById('galleryCarousel');
   if (!carousel) return;
+
   const prevBtn = document.getElementById('galleryPrev');
   const nextBtn = document.getElementById('galleryNext');
-  const items = carousel.querySelectorAll('.gallery-carousel-item');
-  let current = 0;
+  const items   = carousel.querySelectorAll('.gallery-carousel-item');
+  let current   = 0;
 
   function getVisible() {
     if (window.innerWidth >= 1024) return 4;
-    if (window.innerWidth >= 600) return 2;
+    if (window.innerWidth >= 600)  return 2;
     return 1;
   }
 
   function getItemWidth() {
-    const gap = 16;
-    return items[0].getBoundingClientRect().width + gap;
+    return items[0].getBoundingClientRect().width + 16;
   }
 
-  function maxIndex() {
-    return Math.max(0, items.length - getVisible());
-  }
+  function maxIndex() { return Math.max(0, items.length - getVisible()); }
 
   function update() {
     carousel.style.transform = `translateX(-${current * getItemWidth()}px)`;
@@ -305,33 +322,27 @@
     nextBtn.style.opacity = current >= maxIndex() ? '0.4' : '1';
   }
 
-  prevBtn.addEventListener('click', () => {
-    if (current > 0) { current--; update(); }
-  });
-  nextBtn.addEventListener('click', () => {
-    if (current < maxIndex()) { current++; update(); }
-  });
-
-  window.addEventListener('resize', () => {
-    current = Math.min(current, maxIndex());
-    update();
-  });
+  prevBtn.addEventListener('click', () => { if (current > 0) { current--; update(); } });
+  nextBtn.addEventListener('click', () => { if (current < maxIndex()) { current++; update(); } });
+  window.addEventListener('resize', () => { current = Math.min(current, maxIndex()); update(); });
 
   update();
-})();
+}
 
-/* --- Order Modal (WhatsApp) --- */
-(function initOrderModal() {
-  const backdrop = document.getElementById('orderModalBackdrop');
+/* -----------------------------------------------
+   Order Modal (WhatsApp)
+   ----------------------------------------------- */
+function initOrderModal() {
+  const backdrop  = document.getElementById('orderModalBackdrop');
   if (!backdrop) return;
 
-  const closeBtn = document.getElementById('orderModalClose');
-  const titleEl  = document.getElementById('orderModalTitle');
-  const priceEl  = backdrop.querySelector('.order-modal-price');
-  const qtyInput = document.getElementById('orderQty');
-  const minusBtn = document.getElementById('orderQtyMinus');
-  const plusBtn  = document.getElementById('orderQtyPlus');
-  const totalEl  = document.getElementById('orderTotal');
+  const closeBtn  = document.getElementById('orderModalClose');
+  const titleEl   = document.getElementById('orderModalTitle');
+  const priceEl   = backdrop.querySelector('.order-modal-price');
+  const qtyInput  = document.getElementById('orderQty');
+  const minusBtn  = document.getElementById('orderQtyMinus');
+  const plusBtn   = document.getElementById('orderQtyPlus');
+  const totalEl   = document.getElementById('orderTotal');
   const submitBtn = document.getElementById('orderModalSubmit');
 
   const WHATSAPP_NUMBER = '919633299529';
@@ -357,30 +368,23 @@
     document.body.style.overflow = '';
   }
 
-  // Open modal on dish order button click
-  // Name/price can come from data attributes OR from sibling DOM elements in the card
   document.querySelectorAll('[data-dish]').forEach(btn => {
     btn.addEventListener('click', () => {
-      // Try data attributes first (home page dish cards)
-      let name = btn.dataset.name;
+      let name  = btn.dataset.name;
       let price = btn.dataset.price;
-
-      // Fallback: read from nearest card's name/price elements (menu page)
       if (!name) {
         const card = btn.closest('.menu-card, .dish-card');
         if (card) {
-          const nameEl = card.querySelector('.menu-card-name, .dish-name');
+          const nameEl  = card.querySelector('.menu-card-name, .dish-name');
           const priceEl = card.querySelector('.menu-card-price, .dish-price');
-          if (nameEl) name = nameEl.textContent.trim();
+          if (nameEl)  name  = nameEl.textContent.trim();
           if (priceEl) price = priceEl.textContent.replace(/[^\d]/g, '');
         }
       }
-
       if (name && price) openModal(name, price);
     });
   });
 
-  // Quantity controls
   minusBtn.addEventListener('click', () => {
     const v = parseInt(qtyInput.value) || 1;
     if (v > 1) { qtyInput.value = v - 1; updateTotal(); }
@@ -390,37 +394,32 @@
     if (v < 20) { qtyInput.value = v + 1; updateTotal(); }
   });
 
-  // Send to WhatsApp
   submitBtn.addEventListener('click', () => {
-    const qty = parseInt(qtyInput.value) || 1;
+    const qty   = parseInt(qtyInput.value) || 1;
     const total = currentDish.price * qty;
-    const msg =
+    const msg   =
       `Hello! I'd like to place an order from Mysore Raman Idli.\n\n` +
       `*Item:* ${currentDish.name}\n` +
       `*Quantity:* ${qty} plate${qty > 1 ? 's' : ''}\n` +
       `*Price per plate:* ₹${currentDish.price}\n` +
       `*Total:* ₹${total}\n\n` +
       `Please confirm my order. Thank you!`;
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
     closeModal();
   });
 
-  // Close on backdrop click or close button
   closeBtn.addEventListener('click', closeModal);
-  backdrop.addEventListener('click', e => {
-    if (e.target === backdrop) closeModal();
-  });
-
-  // Close on Escape
+  backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && backdrop.classList.contains('open')) closeModal();
   });
-})();
+}
 
-/* --- Reviews Carousel Arrows --- */
-(function initReviewsArrows() {
-  const scroll = document.getElementById('reviewsScroll');
+/* -----------------------------------------------
+   Reviews Carousel
+   ----------------------------------------------- */
+function initReviewsArrows() {
+  const scroll  = document.getElementById('reviewsScroll');
   const prevBtn = document.getElementById('reviewsPrev');
   const nextBtn = document.getElementById('reviewsNext');
   if (!scroll || !prevBtn || !nextBtn) return;
@@ -432,53 +431,48 @@
 
   function updateArrows() {
     const atStart = scroll.scrollLeft <= 4;
-    const atEnd = scroll.scrollLeft + scroll.clientWidth >= scroll.scrollWidth - 4;
-    prevBtn.style.opacity = atStart ? '0.4' : '1';
+    const atEnd   = scroll.scrollLeft + scroll.clientWidth >= scroll.scrollWidth - 4;
+    prevBtn.style.opacity      = atStart ? '0.4' : '1';
     prevBtn.style.pointerEvents = atStart ? 'none' : 'auto';
-    nextBtn.style.opacity = atEnd ? '0.4' : '1';
+    nextBtn.style.opacity      = atEnd ? '0.4' : '1';
     nextBtn.style.pointerEvents = atEnd ? 'none' : 'auto';
   }
 
-  prevBtn.addEventListener('click', () => {
-    scroll.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
-  });
-  nextBtn.addEventListener('click', () => {
-    scroll.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
-  });
-
+  prevBtn.addEventListener('click', () => scroll.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' }));
+  nextBtn.addEventListener('click', () => scroll.scrollBy({ left:  getScrollAmount(), behavior: 'smooth' }));
   scroll.addEventListener('scroll', updateArrows, { passive: true });
-  updateArrows(); // set initial state
-})();
+  updateArrows();
+}
 
-/* --- Page Loader --- */
-(function initPageLoader() {
+/* -----------------------------------------------
+   Page Loader (first-visit only, runs once)
+   ----------------------------------------------- */
+function initPageLoader() {
   const loader = document.getElementById('pageLoader');
   if (!loader) return;
 
-  const LOADER_KEY = 'mri_loader_shown';
-  const SHOW_DURATION = 2000; // ms to show on first visit
+  const LOADER_KEY    = 'mri_loader_shown';
+  const SHOW_DURATION = 2000;
 
   function revealHeroElements() {
     document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
       const rect = el.getBoundingClientRect();
       if (rect.top < window.innerHeight && rect.bottom > 0) {
-        el.style.transition = 'none';
-        el.style.animation = 'none';
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
+        el.style.transition  = 'none';
+        el.style.animation   = 'none';
+        el.style.opacity     = '1';
+        el.style.transform   = 'translateY(0)';
         el.classList.add('visible');
       }
     });
   }
 
-  // Not first visit — hide loader immediately, no flash
   if (localStorage.getItem(LOADER_KEY)) {
     loader.style.display = 'none';
     revealHeroElements();
     return;
   }
 
-  // First visit — mark as shown, display for exactly 2s
   localStorage.setItem(LOADER_KEY, '1');
 
   function hideLoader() {
@@ -487,17 +481,105 @@
   }
 
   const startTime = Date.now();
-
   window.addEventListener('load', () => {
-    const elapsed = Date.now() - startTime;
+    const elapsed   = Date.now() - startTime;
     const remaining = SHOW_DURATION - elapsed;
-    if (remaining > 0) {
-      setTimeout(hideLoader, remaining);
-    } else {
-      hideLoader();
+    if (remaining > 0) setTimeout(hideLoader, remaining);
+    else hideLoader();
+  });
+  setTimeout(hideLoader, SHOW_DURATION + 1000);
+}
+
+/* -----------------------------------------------
+   Run all page-specific inits
+   ----------------------------------------------- */
+function initPage() {
+  initReveal();
+  initMenuTabs();
+  initGalleryFilter();
+  initLightbox();
+  initContactForm();
+  initHomeGalleryCarousel();
+  initOrderModal();
+  initReviewsArrows();
+}
+
+/* -----------------------------------------------
+   BARBA.JS — Smooth page transitions
+   ----------------------------------------------- */
+(function initBarba() {
+  if (typeof barba === 'undefined') {
+    // Barba not loaded (fallback) — just run page inits normally
+    initNavbar();
+    initPageLoader();
+    initPage();
+    return;
+  }
+
+  // One-time persistent inits
+  initNavbar();
+  initPageLoader();
+
+  barba.init({
+    // Prevent Barba from handling anchor-only links or external links
+    prevent: ({ el }) => {
+      // Let browser handle mailto/tel/hash-only
+      const href = el.getAttribute('href') || '';
+      if (href.startsWith('#')) return true;
+      return false;
+    },
+
+    transitions: [{
+      name: 'fade',
+
+      async leave({ current }) {
+        // Fade out current container
+        current.container.style.transition = 'opacity 0.25s ease';
+        current.container.style.opacity    = '0';
+        await new Promise(r => setTimeout(r, 260));
+      },
+
+      async enter({ next }) {
+        // Start invisible, then fade in after browser paints
+        next.container.style.opacity    = '0';
+        next.container.style.transition = 'opacity 0.3s ease';
+        await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+        next.container.style.opacity = '1';
+        await new Promise(r => setTimeout(r, 310));
+      }
+    }],
+
+    hooks: {
+      // Before fetching next page
+      before() {
+        // Close mobile drawer if open
+        const drawer  = document.querySelector('.nav-drawer');
+        const overlay = document.querySelector('.nav-overlay');
+        const hamburger = document.querySelector('.hamburger');
+        if (drawer && drawer.classList.contains('open')) {
+          drawer.classList.remove('open');
+          if (overlay)  overlay.classList.remove('open');
+          if (hamburger) hamburger.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      },
+
+      afterEnter({ next }) {
+        // Scroll to top
+        window.scrollTo(0, 0);
+        // Update navbar state + active link
+        updateNavForNamespace(next.namespace);
+        // Re-init all page-specific components
+        initPage();
+      }
     }
   });
 
-  // Hard fallback
-  setTimeout(hideLoader, SHOW_DURATION + 1000);
+  // Run page inits for the initial page load
+  initPage();
+  // Set navbar state for the initial page
+  const initialContainer = document.querySelector('[data-barba="container"]');
+  if (initialContainer) {
+    updateNavForNamespace(initialContainer.dataset.barbaNamespace);
+  }
 })();

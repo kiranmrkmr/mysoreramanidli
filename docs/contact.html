@@ -21,7 +21,7 @@
   <link rel="icon" href="images/favicon.png" type="image/png" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body>
+<body data-barba="wrapper">
 
 <!-- ===== NAVBAR ===== -->
 <nav class="navbar inner-page" id="navbar">
@@ -52,12 +52,12 @@
   <a href="menu.html" class="nav-drawer-order">Order Now</a>
 </nav>
 
-<main>
+<main data-barba="container" data-barba-namespace="contact">
 
 <!-- ===== PAGE HERO ===== -->
 <section class="page-hero">
   <div class="page-hero-bg">
-    <img src="https://images.unsplash.com/photo-1757918391899-1341f7b285fb?w=1600&q=90&auto=format&fit=crop" alt="" aria-hidden="true" />
+    <img src="images/contact-heroo.png" alt="" aria-hidden="true" />
   </div>
   <div class="page-hero-overlay"></div>
   <div class="container-xl">
@@ -235,6 +235,7 @@
   </div>
 </footer>
 
+<script src="https://unpkg.com/@barba/core@2.10.3/dist/barba.umd.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

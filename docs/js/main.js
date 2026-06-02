@@ -542,21 +542,26 @@ function initPage() {
 
       // Fade out current page
       async leave({ current }) {
-        current.container.style.transition = 'opacity 0.15s ease';
+        current.container.style.transition = 'opacity 0.12s ease-in, transform 0.12s ease-in';
         current.container.style.opacity    = '0';
-        await new Promise(r => setTimeout(r, 150));
+        current.container.style.transform  = 'translateY(-8px)';
+        await new Promise(r => setTimeout(r, 120));
       },
 
       // Fade in next page
       async enter({ next }) {
         next.container.style.opacity    = '0';
-        next.container.style.transition = 'opacity 0.18s ease';
+        next.container.style.transform  = 'translateY(12px)';
+        next.container.style.transition = 'none';
         await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-        next.container.style.opacity = '1';
-        await new Promise(r => setTimeout(r, 185));
+        next.container.style.transition = 'opacity 0.28s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.28s cubic-bezier(0.25,0.46,0.45,0.94)';
+        next.container.style.opacity    = '1';
+        next.container.style.transform  = 'translateY(0)';
+        await new Promise(r => setTimeout(r, 290));
         // Remove inline styles so they don't interfere with reveal animations
         next.container.style.removeProperty('opacity');
         next.container.style.removeProperty('transition');
+        next.container.style.removeProperty('transform');
       },
 
       // After next page has entered — re-init everything

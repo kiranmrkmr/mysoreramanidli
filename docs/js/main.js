@@ -572,6 +572,9 @@ function initPage(skipViewportAnim = false) {
 
       // ④ Fade in the new page — content is already fully rendered
       async enter({ next }) {
+        // Force a paint at opacity:0 before starting the transition
+        next.container.style.opacity = '0';
+        await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
         next.container.style.transition = 'opacity 0.4s ease';
         next.container.style.opacity    = '1';
         await new Promise(r => setTimeout(r, 420));

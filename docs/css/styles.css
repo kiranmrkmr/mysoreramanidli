@@ -630,6 +630,13 @@ button { font-family: inherit; cursor: pointer; }
 }
 @media (min-width: 640px) { .dishes-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .dishes-grid { grid-template-columns: repeat(3, 1fr); } }
+/* Mobile: hide dishes 4–6 and show inline CTA after 3 */
+.dishes-mobile-cta { display: none; text-align: center; margin-top: 2rem; }
+@media (max-width: 639px) {
+  .dishes-grid-extra { display: none; }
+  .dishes-mobile-cta { display: block; }
+  .section-cta { display: none; }
+}
 .dish-card {
   background: white;
   border-radius: 1rem;

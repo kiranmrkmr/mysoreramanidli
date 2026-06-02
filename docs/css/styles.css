@@ -452,7 +452,7 @@ button { font-family: inherit; cursor: pointer; }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 145px;
+  padding-top: 165px;
   padding-bottom: 4rem;
 }
 @media (min-width: 768px) {

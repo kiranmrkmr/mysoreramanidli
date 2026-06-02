@@ -94,16 +94,6 @@ function initReveal() {
   const els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
   if (!els.length) return;
 
-  // Reset any previously-visible state so reveals re-animate on new page
-  els.forEach(el => {
-    el.classList.remove('visible');
-    el.style.removeProperty('animation-delay');
-    el.style.removeProperty('transition');
-    el.style.removeProperty('animation');
-    el.style.removeProperty('opacity');
-    el.style.removeProperty('transform');
-  });
-
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -118,8 +108,18 @@ function initReveal() {
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
+  // Reset state (remove visible + inline overrides) then observe.
+  // Double-rAF lets the browser paint the reset opacity:0 before we start watching.
   requestAnimationFrame(() => requestAnimationFrame(() => {
-    els.forEach(el => observer.observe(el));
+    els.forEach(el => {
+      el.classList.remove('visible');
+      el.style.removeProperty('animation-delay');
+      el.style.removeProperty('transition');
+      el.style.removeProperty('animation');
+      el.style.removeProperty('opacity');
+      el.style.removeProperty('transform');
+      observer.observe(el);
+    });
   }));
 }
 
@@ -546,6 +546,9 @@ function initPage() {
         await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
         next.container.style.opacity = '1';
         await new Promise(r => setTimeout(r, 310));
+        // Clean up inline styles so they don't interfere with reveal animations
+        next.container.style.removeProperty('opacity');
+        next.container.style.removeProperty('transition');
       }
     }],
 
@@ -565,7 +568,7 @@ function initPage() {
       },
 
       afterEnter({ next }) {
-        // Scroll to top
+        // Scroll to top (harmless on initial load; we're already at 0)
         window.scrollTo(0, 0);
         // Update navbar state + active link
         updateNavForNamespace(next.namespace);
@@ -574,12 +577,6 @@ function initPage() {
       }
     }
   });
-
-  // Run page inits for the initial page load
-  initPage();
-  // Set navbar state for the initial page
-  const initialContainer = document.querySelector('[data-barba="container"]');
-  if (initialContainer) {
-    updateNavForNamespace(initialContainer.dataset.barbaNamespace);
-  }
+  // Note: Barba v2 fires afterEnter for the initial page load too,
+  // so no explicit initPage() call is needed here — it would double-init.
 })();

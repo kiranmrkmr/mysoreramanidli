@@ -1782,6 +1782,23 @@ footer {
   grid-template-columns: 1fr;
 }
 @media (min-width: 1024px) { .loc-card-full { grid-template-columns: repeat(2, 1fr); } }
+/* Permanently closed location card */
+.loc-card-closed { opacity: 0.6; filter: grayscale(0.5); position: relative; }
+.loc-card-closed:hover { opacity: 0.7; }
+.loc-closed-banner {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 5;
+  background: #c0392b; color: white;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.45rem 1rem; display: flex; align-items: center; gap: 0.4rem;
+}
+.loc-closed-label {
+  display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.06em; background: #c0392b; color: white;
+  padding: 0.15rem 0.6rem; border-radius: 9999px; vertical-align: middle; margin-left: 0.5rem;
+}
+.loc-closed-note {
+  font-size: 0.85rem; color: #c0392b; margin-bottom: 1.25rem; font-style: italic;
+}
 .loc-map-wrap { position: relative; height: 18rem; background: var(--parchment); }
 @media (min-width: 1024px) { .loc-map-wrap { height: auto; min-height: 20rem; } }
 .loc-map-wrap iframe { width: 100%; height: 100%; border: none; }

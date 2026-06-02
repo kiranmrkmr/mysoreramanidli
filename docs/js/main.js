@@ -90,7 +90,11 @@ function updateNavForNamespace(namespace) {
 /* -----------------------------------------------
    Scroll Reveal (IntersectionObserver)
    ----------------------------------------------- */
-function initReveal() {
+// skipViewportAnim = true during Barba transitions:
+// elements already on screen become visible instantly (no animation)
+// so the curtain lifts onto a fully-rendered page.
+// Elements below the fold still animate in on scroll as normal.
+function initReveal(skipViewportAnim = false) {
   const els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
   if (!els.length) return;
 
@@ -100,16 +104,12 @@ function initReveal() {
         const el = entry.target;
         const delay = el.dataset.delay || el.dataset.animDelay;
         if (delay) el.style.animationDelay = delay + 's';
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-          el.classList.add('visible');
-        }));
+        requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('visible')));
         observer.unobserve(el);
       }
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-  // Reset state (remove visible + inline overrides) then observe.
-  // Double-rAF lets the browser paint the reset opacity:0 before we start watching.
   requestAnimationFrame(() => requestAnimationFrame(() => {
     els.forEach(el => {
       el.classList.remove('visible');
@@ -118,6 +118,21 @@ function initReveal() {
       el.style.removeProperty('animation');
       el.style.removeProperty('opacity');
       el.style.removeProperty('transform');
+
+      if (skipViewportAnim) {
+        const rect = el.getBoundingClientRect();
+        const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
+        if (inViewport) {
+          // Show instantly — curtain is still up, no flash
+          el.style.transition = 'none';
+          el.style.animation  = 'none';
+          el.style.opacity    = '1';
+          el.style.transform  = 'none';
+          el.classList.add('visible');
+          return; // skip IO for this element
+        }
+      }
+
       observer.observe(el);
     });
   }));
@@ -493,8 +508,8 @@ function initPageLoader() {
 /* -----------------------------------------------
    Run all page-specific inits
    ----------------------------------------------- */
-function initPage() {
-  initReveal();
+function initPage(skipViewportAnim = false) {
+  initReveal(skipViewportAnim);
   initMenuTabs();
   initGalleryFilter();
   initLightbox();
@@ -572,7 +587,7 @@ function initPage() {
       // Fade the curtain away to reveal the new page
       async afterEnter({ next }) {
         updateNavForNamespace(next.namespace);
-        initPage();
+        initPage(true); // true = instant-show viewport elements, curtain still up
         // Hold until browser has fully painted the new page, then lift
         await new Promise(r => setTimeout(r, 180));
         curtain.style.transition = 'opacity 0.4s cubic-bezier(0.25,0.46,0.45,0.94)';

@@ -573,11 +573,11 @@ function initPage() {
       async afterEnter({ next }) {
         updateNavForNamespace(next.namespace);
         initPage();
-        // Brief pause so the new page has painted before revealing
-        await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-        curtain.style.transition = 'opacity 0.28s cubic-bezier(0.25,0.46,0.45,0.94)';
+        // Wait for the browser to fully paint the new page before lifting curtain
+        await new Promise(r => setTimeout(r, 80));
+        curtain.style.transition = 'opacity 0.3s cubic-bezier(0.25,0.46,0.45,0.94)';
         curtainOut();
-        await new Promise(r => setTimeout(r, 290));
+        await new Promise(r => setTimeout(r, 310));
         curtain.style.transition = 'opacity 0.18s ease'; // reset for next leave
       }
     }]

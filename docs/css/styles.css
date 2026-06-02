@@ -1820,7 +1820,7 @@ footer {
 .loc-detail-icon { flex-shrink: 0; width: 17px; height: 17px; color: var(--forest-green); margin-top: 2px; }
 .loc-detail-primary { font-size: 0.875rem; font-weight: 500; color: var(--charcoal); }
 .loc-detail-secondary { font-size: 0.75rem; color: var(--mid-gray); margin-top: 0.125rem; }
-.timing-rows { display: contents; }
+.timing-rows { display: block; }
 .timing-row { display: flex; gap: 1rem; font-size: 0.75rem; }
 .timing-day { color: var(--mid-gray); width: 8rem; flex-shrink: 0; }
 .timing-hours { color: var(--charcoal); font-weight: 500; }

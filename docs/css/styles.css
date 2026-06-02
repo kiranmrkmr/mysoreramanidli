@@ -1499,6 +1499,7 @@ footer {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   scrollbar-width: none;
+  scroll-behavior: smooth;
 }
 .menu-tabs::-webkit-scrollbar { display: none; }
 .menu-tab {

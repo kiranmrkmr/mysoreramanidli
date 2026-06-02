@@ -98,27 +98,44 @@
   const tabs = document.querySelectorAll('.menu-tab');
   if (!tabs.length) return;
 
-  const navbar = document.querySelector('.navbar');
-  const anchor = document.getElementById('menu-anchor');
+  const navbar  = document.querySelector('.navbar');
+  const anchor  = document.getElementById('menu-anchor');
+  const tabsBar = document.querySelector('.menu-tabs-bar');
+  const tabsScroll = document.querySelector('.menu-tabs');
 
   function getScrollTarget() {
     const navH = navbar ? navbar.offsetHeight : 0;
-    // Use the non-sticky sentinel anchor for reliable position
     return anchor ? anchor.offsetTop - navH : 0;
   }
 
-  function activateTab(cat) {
+  // Scroll the active tab button into view inside the horizontal tab bar
+  function scrollTabIntoView(tabEl) {
+    if (!tabsScroll || !tabEl) return;
+    const barRect = tabsScroll.getBoundingClientRect();
+    const tabRect = tabEl.getBoundingClientRect();
+    const offset  = tabRect.left - barRect.left + tabsScroll.scrollLeft;
+    const center  = offset - barRect.width / 2 + tabRect.width / 2;
+    tabsScroll.scrollTo({ left: center, behavior: 'smooth' });
+  }
+
+  function activateTab(cat, scrollPage, scrollBehavior) {
     tabs.forEach(t => t.classList.remove('active'));
     const match = Array.from(tabs).find(t => t.dataset.cat === cat);
-    if (match) match.classList.add('active');
+    if (match) {
+      match.classList.add('active');
+      scrollTabIntoView(match);
+    }
     document.querySelectorAll('.menu-items-section').forEach(section => {
       section.style.display = section.dataset.cat === cat ? 'grid' : 'none';
     });
+    if (scrollPage) {
+      window.scrollTo({ top: getScrollTarget(), behavior: scrollBehavior || 'smooth' });
+    }
   }
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      activateTab(tab.dataset.cat);
+      activateTab(tab.dataset.cat, true, 'smooth');
       history.replaceState(null, '', '#' + tab.dataset.cat);
     });
   });
@@ -127,8 +144,7 @@
   window.addEventListener('load', () => {
     const hash = window.location.hash.replace('#', '');
     if (hash && Array.from(tabs).some(t => t.dataset.cat === hash)) {
-      activateTab(hash);
-      window.scrollTo({ top: getScrollTarget(), behavior: 'instant' });
+      activateTab(hash, true, 'instant');
     }
   });
 
@@ -139,8 +155,7 @@
       const hash = link.getAttribute('href').split('#')[1];
       if (Array.from(tabs).some(t => t.dataset.cat === hash)) {
         history.pushState(null, '', '#' + hash);
-        activateTab(hash);
-        window.scrollTo({ top: getScrollTarget(), behavior: 'smooth' });
+        activateTab(hash, true, 'smooth');
       }
     });
   });

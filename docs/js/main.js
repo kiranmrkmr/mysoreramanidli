@@ -509,74 +509,68 @@ function initPage() {
    ----------------------------------------------- */
 (function initBarba() {
   if (typeof barba === 'undefined') {
-    // Barba not loaded (fallback) — just run page inits normally
+    // Barba not loaded (fallback) — run everything normally
     initNavbar();
     initPageLoader();
     initPage();
     return;
   }
 
-  // One-time persistent inits
+  // One-time persistent inits (navbar stays across transitions)
   initNavbar();
   initPageLoader();
 
   barba.init({
-    // Prevent Barba from handling anchor-only links or external links
-    prevent: ({ el }) => {
-      // Let browser handle mailto/tel/hash-only
-      const href = el.getAttribute('href') || '';
-      if (href.startsWith('#')) return true;
-      return false;
-    },
+    // Prevent Barba from intercepting anchor-only links
+    prevent: ({ el }) => (el.getAttribute('href') || '').startsWith('#'),
 
     transitions: [{
       name: 'fade',
 
-      async leave({ current }) {
-        // Fade out current container
-        current.container.style.transition = 'opacity 0.25s ease';
-        current.container.style.opacity    = '0';
-        await new Promise(r => setTimeout(r, 260));
-      },
-
-      async enter({ next }) {
-        // Start invisible, then fade in after browser paints
-        next.container.style.opacity    = '0';
-        next.container.style.transition = 'opacity 0.3s ease';
-        await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-        next.container.style.opacity = '1';
-        await new Promise(r => setTimeout(r, 310));
-        // Clean up inline styles so they don't interfere with reveal animations
-        next.container.style.removeProperty('opacity');
-        next.container.style.removeProperty('transition');
-      }
-    }],
-
-    hooks: {
-      // Before fetching next page
+      // Close mobile drawer before leaving current page
       before() {
-        // Close mobile drawer if open
-        const drawer  = document.querySelector('.nav-drawer');
-        const overlay = document.querySelector('.nav-overlay');
+        const drawer    = document.querySelector('.nav-drawer');
+        const overlay   = document.querySelector('.nav-overlay');
         const hamburger = document.querySelector('.hamburger');
         if (drawer && drawer.classList.contains('open')) {
           drawer.classList.remove('open');
-          if (overlay)  overlay.classList.remove('open');
+          if (overlay)   overlay.classList.remove('open');
           if (hamburger) hamburger.classList.remove('open');
           document.body.style.overflow = '';
         }
       },
 
+      // Fade out current page
+      async leave({ current }) {
+        current.container.style.transition = 'opacity 0.25s ease';
+        current.container.style.opacity    = '0';
+        await new Promise(r => setTimeout(r, 260));
+      },
+
+      // Fade in next page
+      async enter({ next }) {
+        next.container.style.opacity    = '0';
+        next.container.style.transition = 'opacity 0.3s ease';
+        await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+        next.container.style.opacity = '1';
+        await new Promise(r => setTimeout(r, 310));
+        // Remove inline styles so they don't interfere with reveal animations
+        next.container.style.removeProperty('opacity');
+        next.container.style.removeProperty('transition');
+      },
+
+      // After next page has entered — re-init everything
       afterEnter({ next }) {
-        // Scroll to top (harmless on initial load; we're already at 0)
         window.scrollTo(0, 0);
-        // Update navbar state + active link
         updateNavForNamespace(next.namespace);
-        // Re-init all page-specific components
         initPage();
       }
-    }
+    }]
   });
-  // Note: Barba v2 fires afterEnter for the initial page load too,
-  // so no explicit initPage() call is needed here — it would double-init.
+
+  // Transition hooks above don't fire for the very first page load
+  // (no leave/enter on initial visit), so run inits manually once here.
+  const ns = document.querySelector('[data-barba-namespace]');
+  if (ns) updateNavForNamespace(ns.dataset.barbaNamespace);
+  initPage();
 })();

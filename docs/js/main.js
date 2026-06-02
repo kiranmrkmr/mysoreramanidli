@@ -553,33 +553,29 @@ function initPage(skipViewportAnim = false) {
         document.body.classList.add('barba-transitioning');
       },
 
-      // ② Fade out the current page
+      // ② Fade out current page
       async leave({ current }) {
-        current.container.style.transition = 'opacity 0.3s ease';
-        current.container.style.opacity    = '0';
-        await new Promise(r => setTimeout(r, 300));
+        await current.container.animate(
+          [{ opacity: 1 }, { opacity: 0 }],
+          { duration: 300, easing: 'ease', fill: 'forwards' }
+        ).finished;
       },
 
-      // ③ While next container is still invisible: scroll, update nav, init scripts
-      async beforeEnter({ next }) {
+      // ③ Prep: hide next container, scroll, update nav, init scripts
+      beforeEnter({ next }) {
         next.container.style.opacity = '0';
         window.scrollTo(0, 0);
         updateNavForNamespace(next.namespace);
-        initPage(true); // make all viewport elements instantly visible
-        // Let rAF callbacks fire before the fade-in starts
-        await new Promise(r => setTimeout(r, 60));
+        initPage(true); // instantly show viewport elements while hidden
       },
 
-      // ④ Fade in the new page — content is already fully rendered
+      // ④ Fade in new page — fully rendered before animation starts
       async enter({ next }) {
-        // Force a paint at opacity:0 before starting the transition
-        next.container.style.opacity = '0';
-        await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-        next.container.style.transition = 'opacity 0.4s ease';
-        next.container.style.opacity    = '1';
-        await new Promise(r => setTimeout(r, 420));
         next.container.style.removeProperty('opacity');
-        next.container.style.removeProperty('transition');
+        await next.container.animate(
+          [{ opacity: 0 }, { opacity: 1 }],
+          { duration: 400, easing: 'ease' }
+        ).finished;
       },
 
       // ⑤ Restore body bg

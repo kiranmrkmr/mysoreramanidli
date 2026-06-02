@@ -1898,6 +1898,35 @@ footer {
 .btn-zomato:hover { background: #C72D3A; }
 .locs-space { padding: 5rem 0; background: var(--cream); display: flex; flex-direction: column; gap: 3.5rem; }
 
+/* ── Small mobile fixes (≤400px) — locations page ── */
+@media (max-width: 400px) {
+  .locs-space { padding: 2.5rem 0; gap: 2rem; }
+
+  /* Card details panel */
+  .loc-details { padding: 1.25rem; }
+  .loc-details h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+  .loc-closed-note { font-size: 0.78rem; }
+
+  /* Timing rows: allow closed text to wrap, tighten padding */
+  .timing-row { padding: 0.4rem 0.625rem; }
+  .timing-hours,
+  .timing-closed { white-space: normal; font-size: 0.72rem; }
+
+  /* Action buttons: full width */
+  .loc-action-btns { flex-direction: column; }
+  .loc-action-btn { width: 100%; justify-content: center; }
+
+  /* Delivery banner */
+  .delivery-banner { padding: 2.5rem 1rem; }
+  .delivery-banner h2 { font-size: 1.4rem; }
+  .delivery-btns { flex-direction: column; align-items: stretch; padding: 0 1.5rem; }
+  .btn-swiggy,
+  .btn-zomato { text-align: center; width: 100%; }
+
+  /* Closed card banner text */
+  .loc-closed-banner { font-size: 0.65rem; }
+}
+
 /* =============================================
    CONTACT PAGE
    ============================================= */

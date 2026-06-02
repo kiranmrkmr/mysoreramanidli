@@ -509,72 +509,81 @@ function initPage() {
    ----------------------------------------------- */
 (function initBarba() {
   if (typeof barba === 'undefined') {
-    // Barba not loaded (fallback) — run everything normally
     initNavbar();
     initPageLoader();
     initPage();
     return;
   }
 
-  // One-time persistent inits (navbar stays across transitions)
   initNavbar();
   initPageLoader();
 
+  // ── Curtain overlay (cream layer that hides the dark body during swap)
+  const curtain = document.createElement('div');
+  curtain.setAttribute('aria-hidden', 'true');
+  Object.assign(curtain.style, {
+    position:       'fixed',
+    inset:          '0',
+    zIndex:         '9998',
+    background:     '#FAF8F2',   // --cream, matches section backgrounds
+    opacity:        '0',
+    pointerEvents:  'none',
+    transition:     'opacity 0.18s ease',
+    willChange:     'opacity',
+  });
+  document.body.appendChild(curtain);
+
+  function curtainIn()  { curtain.style.opacity = '1'; curtain.style.pointerEvents = 'all'; }
+  function curtainOut() {
+    curtain.style.opacity = '0';
+    curtain.style.pointerEvents = 'none';
+  }
+
   barba.init({
-    // Prevent Barba from intercepting anchor-only links
     prevent: ({ el }) => (el.getAttribute('href') || '').startsWith('#'),
 
     transitions: [{
-      name: 'fade',
+      name: 'curtain',
 
-      // Close mobile drawer before leaving current page
+      // Close mobile drawer before navigation
       before() {
         const drawer    = document.querySelector('.nav-drawer');
-        const overlay   = document.querySelector('.nav-overlay');
+        const navOverlay = document.querySelector('.nav-overlay');
         const hamburger = document.querySelector('.hamburger');
         if (drawer && drawer.classList.contains('open')) {
           drawer.classList.remove('open');
-          if (overlay)   overlay.classList.remove('open');
-          if (hamburger) hamburger.classList.remove('open');
+          if (navOverlay) navOverlay.classList.remove('open');
+          if (hamburger)  hamburger.classList.remove('open');
           document.body.style.overflow = '';
         }
       },
 
-      // Fade out current page
-      async leave({ current }) {
-        current.container.style.transition = 'opacity 0.12s ease-in, transform 0.12s ease-in';
-        current.container.style.opacity    = '0';
-        current.container.style.transform  = 'translateY(-8px)';
-        await new Promise(r => setTimeout(r, 120));
+      // Sweep the curtain over the current page (hides dark body)
+      async leave() {
+        curtainIn();
+        await new Promise(r => setTimeout(r, 190)); // wait for curtain fade-in
       },
 
-      // Fade in next page
-      async enter({ next }) {
-        next.container.style.opacity    = '0';
-        next.container.style.transform  = 'translateY(12px)';
-        next.container.style.transition = 'none';
-        await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-        next.container.style.transition = 'opacity 0.28s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.28s cubic-bezier(0.25,0.46,0.45,0.94)';
-        next.container.style.opacity    = '1';
-        next.container.style.transform  = 'translateY(0)';
-        await new Promise(r => setTimeout(r, 290));
-        // Remove inline styles so they don't interfere with reveal animations
-        next.container.style.removeProperty('opacity');
-        next.container.style.removeProperty('transition');
-        next.container.style.removeProperty('transform');
-      },
-
-      // After next page has entered — re-init everything
-      afterEnter({ next }) {
+      // New page content loads behind the curtain — no flash
+      enter() {
         window.scrollTo(0, 0);
+      },
+
+      // Fade the curtain away to reveal the new page
+      async afterEnter({ next }) {
         updateNavForNamespace(next.namespace);
         initPage();
+        // Brief pause so the new page has painted before revealing
+        await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+        curtain.style.transition = 'opacity 0.28s cubic-bezier(0.25,0.46,0.45,0.94)';
+        curtainOut();
+        await new Promise(r => setTimeout(r, 290));
+        curtain.style.transition = 'opacity 0.18s ease'; // reset for next leave
       }
     }]
   });
 
-  // Transition hooks above don't fire for the very first page load
-  // (no leave/enter on initial visit), so run inits manually once here.
+  // Initial page — transition hooks don't fire on first load
   const ns = document.querySelector('[data-barba-namespace]');
   if (ns) updateNavForNamespace(ns.dataset.barbaNamespace);
   initPage();

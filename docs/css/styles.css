@@ -35,6 +35,7 @@ body {
 }
 /* Barba page transitions */
 body.barba-transitioning { background: var(--cream); }
+.barba-hidden { opacity: 0 !important; }
 @keyframes barba-fade-out {
   from { opacity: 1; }
   to   { opacity: 0; }
@@ -44,7 +45,7 @@ body.barba-transitioning { background: var(--cream); }
   to   { opacity: 1; }
 }
 .barba-leave { animation: barba-fade-out 0.3s ease forwards; }
-.barba-enter { animation: barba-fade-in  0.4s ease both; }
+.barba-enter { animation: barba-fade-in  0.4s ease forwards; }
 img { max-width: 100%; height: auto; display: block; }
 a { text-decoration: none; color: inherit; }
 button { font-family: inherit; cursor: pointer; }

@@ -553,23 +553,26 @@ function initPage(skipViewportAnim = false) {
         document.body.classList.add('barba-transitioning');
       },
 
-      // ② Fade out — add CSS class, wait for animation duration
+      // ② Fade out current page
       async leave({ current }) {
         current.container.classList.add('barba-leave');
         await new Promise(r => setTimeout(r, 300));
       },
 
-      // ③ afterLeave: next container is now in DOM — set up page while invisible
-      afterLeave({ next }) {
+      // ③ Pre-hide next container the moment it enters the DOM,
+      //    then set up scroll / nav / scripts while it's invisible
+      beforeEnter({ next }) {
+        next.container.classList.add('barba-hidden');
         window.scrollTo(0, 0);
         updateNavForNamespace(next.namespace);
         initPage(true);
       },
 
-      // ④ Fade in — CSS keyframe starts at opacity:0 via animation-fill-mode:both
+      // ④ Swap classes atomically — hidden→fade-in (no visible flash)
       async enter({ next }) {
+        next.container.classList.remove('barba-hidden');
         next.container.classList.add('barba-enter');
-        await new Promise(r => setTimeout(r, 400));
+        await new Promise(r => setTimeout(r, 420));
         next.container.classList.remove('barba-enter');
       },
 

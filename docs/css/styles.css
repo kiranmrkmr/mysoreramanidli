@@ -1647,22 +1647,20 @@ footer {
 .timeline-item { display: flex; gap: 1.5rem; }
 .timeline-connector { display: flex; flex-direction: column; align-items: center; }
 .timeline-dot {
-  min-width: 5rem;
-  padding: 0.35rem 0.75rem;
-  border-radius: 2rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
   background: var(--brass);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--forest-deep);
-  text-align: center;
-  white-space: nowrap;
 }
 .timeline-line { width: 1px; flex: 1; background: rgba(255,255,255,0.15); margin: 0.5rem 0; min-height: 2.5rem; }
-.timeline-content { padding-bottom: 1.75rem; padding-top: 0.5rem; }
+.timeline-content { padding-bottom: 1.75rem; padding-top: 0.625rem; }
 .timeline-content h3 { font-size: 1rem; font-weight: 600; color: var(--cream); margin-bottom: 0.35rem; }
 .timeline-content p { font-size: 0.875rem; color: rgba(250,248,242,0.75); line-height: 1.6; }
 .about-cta { padding: 6rem 0; background: var(--cream); text-align: center; }

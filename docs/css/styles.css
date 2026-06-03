@@ -1055,7 +1055,7 @@ button { font-family: inherit; cursor: pointer; }
   box-shadow: 0 4px 16px rgba(0,0,0,0.25);
   transition: background 0.2s, transform 0.2s;
 }
-.gallery-carousel-btn:hover { background: var(--brass); color: var(--forest-deep); transform: translateY(-50%) scale(1.08); }
+.gallery-carousel-btn:hover { background: var(--forest-green); color: var(--cream); transform: translateY(-50%) scale(1.08); }
 .gallery-carousel-btn.prev { left: 0.5rem; }
 .gallery-carousel-btn.next { right: 0.5rem; }
 

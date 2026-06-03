@@ -602,7 +602,7 @@ button { font-family: inherit; cursor: pointer; }
 .hero-btns { display: flex; flex-wrap: nowrap; gap: 0.625rem; }
 
 @media (max-width: 767px) {
-  .hero-headline { font-size: clamp(3.2rem, 12vw, 4.5rem); }
+  .hero-headline { font-size: 58px; }
   .hero-btns { gap: 0.5rem; }
   .hero-btns .btn-green,
   .hero-btns .btn-outline-cream {

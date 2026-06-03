@@ -1055,7 +1055,7 @@ button { font-family: inherit; cursor: pointer; }
   box-shadow: 0 4px 16px rgba(0,0,0,0.25);
   transition: background 0.2s, transform 0.2s;
 }
-.gallery-carousel-btn:hover { background: var(--gold); transform: translateY(-50%) scale(1.08); }
+.gallery-carousel-btn:hover { background: var(--brass); color: var(--forest-deep); transform: translateY(-50%) scale(1.08); }
 .gallery-carousel-btn.prev { left: 0.5rem; }
 .gallery-carousel-btn.next { right: 0.5rem; }
 
@@ -1225,7 +1225,7 @@ button { font-family: inherit; cursor: pointer; }
   font-size: 0.9rem;
   color: rgba(250,248,242,0.8);
 }
-.loc-preview-row svg { flex-shrink: 0; margin-top: 0.1rem; color: var(--gold); }
+.loc-preview-row svg { flex-shrink: 0; margin-top: 0.1rem; color: var(--brass); }
 .loc-preview-actions { display: flex; gap: 0.625rem; flex-wrap: wrap; margin-top: auto; }
 .loc-prev-btn {
   display: inline-flex;
@@ -1631,7 +1631,7 @@ footer {
 .about-text h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); line-height: 1.1; color: var(--charcoal); margin-bottom: 1.5rem; }
 .about-text p { color: var(--mid-gray); line-height: 1.8; margin-bottom: 1.25rem; }
 .about-text em { font-style: italic; }
-.about-text .accent { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.35rem; color: var(--charcoal); font-weight: 600; line-height: 1.6; border-left: 3px solid var(--gold); margin-top: 1.5rem; }
+.about-text .accent { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.35rem; color: var(--charcoal); font-weight: 600; line-height: 1.6; border-left: 3px solid var(--brass); margin-top: 1.5rem; }
 .values-section { padding: 6rem 0; background: var(--ivory); }
 .values-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
 @media (min-width: 640px) { .values-grid { grid-template-columns: repeat(2, 1fr); } }

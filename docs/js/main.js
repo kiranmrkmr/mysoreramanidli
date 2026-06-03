@@ -503,6 +503,63 @@ function initPageLoader() {
 }
 
 /* -----------------------------------------------
+   Hero Parallax — mouse movement on home page
+   ----------------------------------------------- */
+function initHeroParallax() {
+  const hero     = document.querySelector('.hero');
+  const mainImg  = document.querySelector('.hero-cutout');
+  const accents  = document.querySelectorAll('.hero-accent');
+  if (!hero || !mainImg) return;
+
+  let targetX = 0, targetY = 0;
+  let currentX = 0, currentY = 0;
+  let rafId;
+
+  hero.addEventListener('mousemove', (e) => {
+    const rect   = hero.getBoundingClientRect();
+    // Normalise -1 to +1
+    targetX = ((e.clientX - rect.left)  / rect.width  - 0.5) * 2;
+    targetY = ((e.clientY - rect.top)   / rect.height - 0.5) * 2;
+  });
+
+  hero.addEventListener('mouseleave', () => {
+    targetX = 0;
+    targetY = 0;
+  });
+
+  function animate() {
+    // Smooth lerp
+    currentX += (targetX - currentX) * 0.07;
+    currentY += (targetY - currentY) * 0.07;
+
+    // Main image: reduced to half — ±4° rotate, ±3° tilt
+    const rotateMain = currentX * -2;
+    const tiltX      = currentY * -1.5;
+    const tiltY      = currentX * -1.5;
+    mainImg.style.transform =
+      `rotate(${rotateMain}deg) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateZ(0)`;
+
+    // Accent bubbles: each moves in a unique direction + gentle float bob
+    const now = performance.now() / 1000;
+    const accentConfig = [
+      { dx:  11, dy:  -7, bob: 3, period: 3.2, phase: 0   },  // bubble 1: right + up
+      { dx:  -8, dy:   5, bob: 2.5, period: 2.8, phase: 1.1 },  // bubble 2: left + down
+      { dx:   5, dy:  10, bob: 3.5, period: 3.8, phase: 0.6 },  // bubble 3: right + down
+    ];
+    accents.forEach((el, i) => {
+      const cfg = accentConfig[i];
+      const tx  = currentX * cfg.dx;
+      const ty  = currentY * cfg.dy + Math.sin(now / cfg.period * Math.PI * 2 + cfg.phase) * cfg.bob;
+      el.style.transform = `translate(${tx}px, ${ty}px)`;
+    });
+
+    rafId = requestAnimationFrame(animate);
+  }
+
+  animate();
+}
+
+/* -----------------------------------------------
    Run all page-specific inits
    ----------------------------------------------- */
 function initPage() {
@@ -514,6 +571,7 @@ function initPage() {
   initHomeGalleryCarousel();
   initOrderModal();
   initReviewsArrows();
+  initHeroParallax();
 }
 
 /* -----------------------------------------------

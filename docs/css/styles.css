@@ -252,7 +252,9 @@ button { font-family: inherit; cursor: pointer; }
   padding: 0;
 }
 .navbar.scrolled, .navbar.inner-page {
-  background: var(--cream);
+  background: rgba(250,248,242,0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 2px 20px rgba(0,0,0,0.08);
 }
 .navbar.transparent { background: transparent; }

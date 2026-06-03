@@ -562,18 +562,26 @@ function initPage(skipViewportAnim = false) {
       // ③ Pre-hide next container the moment it enters the DOM,
       //    then set up scroll / nav / scripts while it's invisible
       beforeEnter({ next }) {
-        next.container.classList.add('barba-hidden');
+        next.container.style.opacity = '0';
         window.scrollTo(0, 0);
         updateNavForNamespace(next.namespace);
         initPage(true);
       },
 
-      // ④ Swap classes atomically — hidden→fade-in (no visible flash)
-      async enter({ next }) {
-        next.container.classList.remove('barba-hidden');
-        next.container.classList.add('barba-enter');
-        await new Promise(r => setTimeout(r, 420));
-        next.container.classList.remove('barba-enter');
+      // ④ Fade in — one rAF ensures the opacity:0 frame is painted first
+      enter({ next }) {
+        return new Promise(resolve => {
+          requestAnimationFrame(() => {
+            next.container.style.transition = 'opacity 0.45s ease';
+            next.container.style.opacity    = '1';
+            next.container.addEventListener('transitionend', function handler() {
+              next.container.removeEventListener('transitionend', handler);
+              next.container.style.transition = '';
+              next.container.style.opacity    = '';
+              resolve();
+            });
+          });
+        });
       },
 
       // ⑤ Restore body bg

@@ -34,12 +34,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 /* Barba page transitions */
-body.barba-transitioning { background: var(--cream); }
-@keyframes barba-fade-out {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
-.barba-leave { animation: barba-fade-out 0.3s ease forwards; }
 img { max-width: 100%; height: auto; display: block; }
 a { text-decoration: none; color: inherit; }
 button { font-family: inherit; cursor: pointer; }

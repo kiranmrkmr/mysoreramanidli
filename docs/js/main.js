@@ -90,11 +90,8 @@ function updateNavForNamespace(namespace) {
 /* -----------------------------------------------
    Scroll Reveal (IntersectionObserver)
    ----------------------------------------------- */
-// skipViewportAnim = true during Barba transitions:
-// elements already on screen become visible instantly (no animation)
-// so the curtain lifts onto a fully-rendered page.
-// Elements below the fold still animate in on scroll as normal.
-function initReveal(skipViewportAnim = false) {
+function initReveal() {
+  const skipViewportAnim = false;
   const els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
   if (!els.length) return;
 
@@ -508,8 +505,8 @@ function initPageLoader() {
 /* -----------------------------------------------
    Run all page-specific inits
    ----------------------------------------------- */
-function initPage(skipViewportAnim = false) {
-  initReveal(skipViewportAnim);
+function initPage() {
+  initReveal();
   initMenuTabs();
   initGalleryFilter();
   initLightbox();
@@ -520,79 +517,22 @@ function initPage(skipViewportAnim = false) {
 }
 
 /* -----------------------------------------------
-   BARBA.JS — Smooth page transitions
+   Bootstrap
    ----------------------------------------------- */
-(function initBarba() {
-  if (typeof barba === 'undefined') {
-    initNavbar();
-    initPageLoader();
-    initPage();
-    return;
-  }
+(function bootstrap() {
+  // Derive active nav from current filename
+  const page = location.pathname.split('/').pop() || 'index.html';
+  const nsMap = {
+    'index.html':     'home',
+    'menu.html':      'menu',
+    'about.html':     'about',
+    'gallery.html':   'gallery',
+    'locations.html': 'locations',
+    'contact.html':   'contact',
+  };
+  updateNavForNamespace(nsMap[page] || 'home');
 
   initNavbar();
   initPageLoader();
-
-  barba.init({
-    prevent: ({ el }) => (el.getAttribute('href') || '').startsWith('#'),
-
-    transitions: [{
-      name: 'fade',
-
-      // ① Close drawer + switch body bg to cream so no dark flash during fade
-      before() {
-        const drawer     = document.querySelector('.nav-drawer');
-        const navOverlay = document.querySelector('.nav-overlay');
-        const hamburger  = document.querySelector('.hamburger');
-        if (drawer && drawer.classList.contains('open')) {
-          drawer.classList.remove('open');
-          if (navOverlay) navOverlay.classList.remove('open');
-          if (hamburger)  hamburger.classList.remove('open');
-          document.body.style.overflow = '';
-        }
-        document.body.classList.add('barba-transitioning');
-      },
-
-      // ② Fade out current page
-      async leave({ current }) {
-        current.container.classList.add('barba-leave');
-        await new Promise(r => setTimeout(r, 300));
-      },
-
-      // ③ Pre-hide next container the moment it enters the DOM,
-      //    then set up scroll / nav / scripts while it's invisible
-      beforeEnter({ next }) {
-        next.container.style.opacity = '0';
-        window.scrollTo(0, 0);
-        updateNavForNamespace(next.namespace);
-        initPage(true);
-      },
-
-      // ④ Fade in — one rAF ensures the opacity:0 frame is painted first
-      enter({ next }) {
-        return new Promise(resolve => {
-          requestAnimationFrame(() => {
-            next.container.style.transition = 'opacity 0.45s ease';
-            next.container.style.opacity    = '1';
-            next.container.addEventListener('transitionend', function handler() {
-              next.container.removeEventListener('transitionend', handler);
-              next.container.style.transition = '';
-              next.container.style.opacity    = '';
-              resolve();
-            });
-          });
-        });
-      },
-
-      // ⑤ Restore body bg
-      after() {
-        document.body.classList.remove('barba-transitioning');
-      }
-    }]
-  });
-
-  // Initial page — transition hooks don't fire on first load
-  const ns = document.querySelector('[data-barba-namespace]');
-  if (ns) updateNavForNamespace(ns.dataset.barbaNamespace);
   initPage();
 })();

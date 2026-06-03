@@ -481,7 +481,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 .hero-headline {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(3.4rem, 9.5vw, 9.5rem);
+  font-size: clamp(2.8rem, 7vw, 6.5rem);
   line-height: 1.1;
   letter-spacing: -0.025em;
   color: var(--cream);
@@ -509,8 +509,8 @@ button { font-family: inherit; cursor: pointer; }
 }
 @media (min-width: 768px) {
   .hero-pill {
-    width: clamp(110px, 13vw, 170px);
-    height: clamp(55px, 6.5vw, 85px);
+    width: clamp(90px, 10vw, 130px);
+    height: clamp(45px, 5vw, 65px);
   }
 }
 .hero-pill img { width: 100%; height: 100%; object-fit: cover; }
@@ -603,9 +603,9 @@ button { font-family: inherit; cursor: pointer; }
 }
 @media (min-width: 1024px) { .float-circle { display: block; } }
 .float-circle img { width: 100%; height: 100%; object-fit: cover; }
-.float-1 { width: 12rem; height: 12rem; top: 16%; right: 5%; animation: float 6s ease-in-out infinite; }
-.float-2 { width: 8rem; height: 8rem; top: 55%; right: 16%; animation: float-delayed 5s ease-in-out infinite 1s; }
-.float-3 { width: 7rem; height: 7rem; top: 56%; left: 3%; animation: float 7s ease-in-out infinite 0.5s; }
+.float-1 { width: 8.5rem; height: 8.5rem; top: 16%; right: 5%; animation: float 6s ease-in-out infinite; }
+.float-2 { width: 6rem; height: 6rem; top: 55%; right: 16%; animation: float-delayed 5s ease-in-out infinite 1s; }
+.float-3 { width: 5.5rem; height: 5.5rem; top: 56%; left: 3%; animation: float 7s ease-in-out infinite 0.5s; }
 
 /* =============================================
    SIGNATURE DISHES

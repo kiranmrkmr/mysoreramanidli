@@ -457,7 +457,7 @@ button { font-family: inherit; cursor: pointer; }
   flex-direction: column;
   justify-content: center;
   padding-top: 165px;
-  padding-bottom: 5rem;
+  padding-bottom: 7rem;
   max-width: 1600px;
 }
 @media (min-width: 768px) {

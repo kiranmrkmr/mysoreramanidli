@@ -458,6 +458,7 @@ button { font-family: inherit; cursor: pointer; }
   justify-content: center;
   padding-top: 165px;
   padding-bottom: 5rem;
+  max-width: 1600px;
 }
 @media (min-width: 768px) {
   .hero-content { padding-top: 7rem; }

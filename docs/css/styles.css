@@ -1182,6 +1182,7 @@ button { font-family: inherit; cursor: pointer; }
   overflow-y: hidden;
   padding-top: 1rem;
   padding-bottom: 1rem;
+  padding-right: 3.5rem;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
 }

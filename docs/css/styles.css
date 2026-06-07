@@ -1825,7 +1825,7 @@ footer {
   .svp-overlay.state-playing .svp-icon-pause { display: block; }
   .svp-overlay.state-playing .svp-icon-play  { display: none; }
 }
-.svp-btn { width: 5rem; height: 5rem; border-radius: 50%; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 2px solid rgba(255,255,255,0.4); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s, transform 0.15s; }
+.svp-btn { width: 4rem; height: 4rem; border-radius: 50%; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 2px solid rgba(255,255,255,0.4); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s, transform 0.15s; }
 .svp-btn:hover { background: rgba(255,255,255,0.25); transform: scale(1.08); }
 .svp-icon-play, .svp-icon-pause { flex-shrink: 0; }
 /* Tag label on video */

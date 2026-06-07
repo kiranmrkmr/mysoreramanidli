@@ -367,6 +367,7 @@ button { font-family: inherit; cursor: pointer; }
   flex-direction: column;
   justify-content: center;
   gap: 0;
+  overflow-y: auto;
 }
 .nav-drawer.open { transform: translateX(0); }
 .nav-drawer a {
@@ -382,6 +383,11 @@ button { font-family: inherit; cursor: pointer; }
 }
 .nav-drawer a:hover { color: var(--cream); background: rgba(255,255,255,0.06); }
 .nav-drawer a.active { color: var(--brass-light) !important; font-weight: 800; }
+
+@media (max-height: 640px) {
+  .nav-drawer { justify-content: flex-start; padding-top: 4.5rem; }
+  .nav-drawer a { font-size: 1.25rem; padding: 0.45rem 1rem; }
+}
 .nav-drawer-order {
   margin-top: 1.5rem;
   padding: 0.9rem 1.5rem;

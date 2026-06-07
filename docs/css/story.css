@@ -309,16 +309,15 @@
   margin-bottom: 1rem;
 }
 .story-oath-icon {
-  width: 2.25rem;
-  height: 2.25rem;
-  background: rgba(196,150,42,0.15);
-  border: 1px solid rgba(196,150,42,0.35);
+  width: 3rem;
+  height: 3rem;
+  background: rgba(196,150,42,0.18);
+  border: 1.5px solid rgba(196,150,42,0.5);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  font-size: 1rem;
 }
 .story-oath-title {
   font-family: 'DM Sans', sans-serif;
@@ -330,10 +329,16 @@
 }
 .story-oath-text {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(1.05rem, 3vw, 1.25rem);
+  font-size: 20px;
   font-style: italic;
-  line-height: 1.65;
+  line-height: 1.5;
   color: rgba(250,248,242,0.82);
+}
+@media (min-width: 768px) {
+  .story-oath-text {
+    font-size: 22px;
+    line-height: 1.4;
+  }
 }
 .story-oath-footer {
   margin-top: 1rem;
@@ -350,8 +355,16 @@
   padding: 1.5rem;
   margin-top: 2rem;
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.75rem;
   align-items: flex-start;
+}
+@media (min-width: 520px) {
+  .story-secret-box {
+    flex-direction: row;
+    gap: 1rem;
+    align-items: flex-start;
+  }
 }
 .story-secret-icon {
   display: flex;
@@ -386,30 +399,84 @@
 }
 
 /* ── Special: 5-hour clock (Chapter 5) ── */
+
+/* Mobile: vertical stack */
 .story-clock-band {
   display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
   margin: 1.75rem 0;
 }
-.story-clock-pill {
+.story-clock-step {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+}
+.story-clock-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   background: var(--forest-green);
   color: var(--cream);
   border-radius: 2rem;
-  padding: 0.4rem 0.9rem;
+  padding: 0.5rem 1.1rem;
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 600;
+  white-space: nowrap;
 }
 .story-clock-pill svg { flex-shrink: 0; }
+
+/* Vertical connector between pills on mobile */
+.story-clock-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 1.35rem; /* align with pill text center */
+  gap: 2px;
+  margin: 2px 0;
+}
+.story-clock-connector-line {
+  width: 1px;
+  height: 0.65rem;
+  background: var(--forest-green);
+  opacity: 0.4;
+  margin-left: 6px;
+}
 .story-clock-divider {
-  font-size: 0.75rem;
-  color: var(--mid-gray);
   font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--forest-green);
+  opacity: 0.6;
+  padding-left: 0.25rem;
+}
+
+/* Desktop: horizontal row */
+@media (min-width: 600px) {
+  .story-clock-band {
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+    flex-wrap: nowrap;
+  }
+  .story-clock-connector {
+    flex-direction: row;
+    align-items: center;
+    padding-left: 0;
+    margin: 0 0.35rem;
+    gap: 4px;
+  }
+  .story-clock-connector-line {
+    width: 1.5rem;
+    height: 1px;
+    margin-left: 0;
+  }
+  .story-clock-divider {
+    padding-left: 0;
+    white-space: nowrap;
+  }
 }
 
 /* ── Special: Butter highlight (Chapter 6) ── */
@@ -623,12 +690,9 @@
 .story-character-avatar {
   width: 2rem;
   height: 2rem;
-  border-radius: 50%;
-  background: rgba(196,150,42,0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9rem;
   flex-shrink: 0;
 }
 .story-character-name {
@@ -660,3 +724,59 @@
 
 /* ── Mobile nav link addition ── */
 .story-nav-link.active { color: var(--forest-green) !important; }
+
+/* ── Video Section ── */
+.story-video-section {
+  background: var(--ivory);
+  padding: 4rem 1.5rem;
+}
+@media (min-width: 768px) {
+  .story-video-section { padding: 5rem 2.5rem; }
+}
+.story-video-inner {
+  max-width: 52rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+@media (min-width: 900px) {
+  .story-video-inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 3.5rem;
+  }
+  .story-video-text { flex: 0 0 36%; }
+  .story-video-wrap { flex: 1; }
+}
+.story-video-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 700;
+  color: var(--charcoal);
+  line-height: 1.2;
+  margin: 0.5rem 0 0.85rem;
+}
+.story-video-sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  color: var(--mid-gray);
+  line-height: 1.75;
+}
+.story-video-wrap {
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+  background: #000;
+}
+.story-video-player {
+  width: 100%;
+  display: block;
+  max-height: 70vh;
+  object-fit: cover;
+}
+
+/* ── Mobile overrides ── */
+@media (max-width: 767px) {
+  .story-promise::before { bottom: -1.6rem; }
+}

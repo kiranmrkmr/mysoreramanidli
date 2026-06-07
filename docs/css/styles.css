@@ -1173,15 +1173,15 @@ button { font-family: inherit; cursor: pointer; }
 /* =============================================
    REVIEWS
    ============================================= */
-.reviews-section { padding: 6rem 0; background: var(--ivory); overflow: hidden; }
-@media (min-width: 768px) { .reviews-section { padding: 8rem 0; } }
+.reviews-section { padding: 3rem 0 3.5rem; background: var(--ivory); overflow: hidden; }
+@media (min-width: 768px) { .reviews-section { padding: 6rem 0; } }
 .reviews-scroll {
   display: flex;
   gap: 1.25rem;
   overflow-x: auto;
   overflow-y: hidden;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   padding-right: 3.5rem;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;

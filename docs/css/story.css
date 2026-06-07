@@ -796,8 +796,8 @@
 .svp-overlay.state-idle .svp-icon-pause { display: none; }
 .svp-overlay.state-idle .svp-icon-play  { display: block; }
 
-/* Playing on mobile: overlay hidden */
-.svp-overlay.state-playing { opacity: 0; pointer-events: none; }
+/* Playing: invisible but tappable on mobile */
+.svp-overlay.state-playing { opacity: 0; pointer-events: auto; }
 .svp-overlay.state-playing .svp-icon-pause { display: none; }
 .svp-overlay.state-playing .svp-icon-play  { display: none; }
 

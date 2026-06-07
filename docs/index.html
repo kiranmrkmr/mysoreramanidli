@@ -347,10 +347,14 @@
             <svg class="svp-icon-pause" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="3" width="4" height="18" rx="1"/><rect x="15" y="3" width="4" height="18" rx="1"/></svg>
           </button>
         </div>
-        <div class="home-video-tag">
+        <div class="home-video-tag" id="homeVideoTag">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           Sandeep's story, in his own words
         </div>
+        <a href="story.html#ch-video" class="home-video-fullbtn" id="homeVideoFullBtn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5,3 19,12 5,21"/></svg>
+          View full story video
+        </a>
       </div>
       <div class="story-text reveal">
         <div class="section-label" style="margin-bottom:1.5rem;">About Us</div>
@@ -816,9 +820,21 @@
     const overlay = document.getElementById('homeVideoOverlay');
     const btn     = document.getElementById('homeVideoBtn');
     if (!video || !overlay || !btn) return;
+    const tag     = document.getElementById('homeVideoTag');
+    const fullBtn = document.getElementById('homeVideoFullBtn');
     const isTouchDevice = () => window.matchMedia('(hover: none)').matches;
-    function setIdle()    { overlay.className = 'svp-overlay state-idle'; video.removeAttribute('controls'); }
-    function setPlaying() { overlay.className = 'svp-overlay state-playing'; if (!isTouchDevice()) video.setAttribute('controls', ''); }
+    function setIdle() {
+      overlay.className = 'svp-overlay state-idle';
+      video.removeAttribute('controls');
+      if (tag)     tag.style.display = '';
+      if (fullBtn) fullBtn.style.display = 'none';
+    }
+    function setPlaying() {
+      overlay.className = 'svp-overlay state-playing';
+      if (!isTouchDevice()) video.setAttribute('controls', '');
+      if (tag)     tag.style.display = 'none';
+      if (fullBtn) fullBtn.style.display = '';
+    }
     setIdle();
     btn.addEventListener('click', () => { video.paused ? video.play() : video.pause(); });
     overlay.addEventListener('click', (e) => {

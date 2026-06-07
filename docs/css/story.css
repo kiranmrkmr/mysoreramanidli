@@ -619,7 +619,7 @@
 .story-closing-inner {
   position: relative;
   z-index: 1;
-  max-width: 36rem;
+  max-width: 39rem;
   margin: 0 auto;
 }
 .story-closing-ornament {
@@ -837,4 +837,8 @@
 /* ── Mobile overrides ── */
 @media (max-width: 767px) {
   .story-promise::before { bottom: -1.6rem; }
+  .story-closing-promise-text { font-size: 1.2rem; }
+}
+@media (min-width: 768px) {
+  .story-closing-promise-text { font-size: 1.5rem; }
 }

@@ -288,7 +288,7 @@ button { font-family: inherit; cursor: pointer; }
   gap: 0.25rem;
   list-style: none;
 }
-@media (min-width: 900px) {
+@media (min-width: 1024px) {
   .nav-links { display: flex; }
 }
 .nav-links a {
@@ -321,7 +321,7 @@ button { font-family: inherit; cursor: pointer; }
   transition: all 0.3s;
 }
 .nav-order:hover { background: var(--forest-dark) !important; transform: translateY(-1px); }
-@media (min-width: 900px) { .nav-order { display: inline-flex; } }
+@media (min-width: 1024px) { .nav-order { display: inline-flex; } }
 
 .hamburger {
   display: flex;
@@ -336,7 +336,7 @@ button { font-family: inherit; cursor: pointer; }
   right: 24px;
   z-index: 99999;
 }
-@media (min-width: 900px) { .hamburger { display: none; } }
+@media (min-width: 1024px) { .hamburger { display: none; } }
 .hamburger span {
   display: block;
   width: 28px;
@@ -347,9 +347,10 @@ button { font-family: inherit; cursor: pointer; }
 .navbar.transparent .hamburger span { background: var(--cream); }
 .navbar.scrolled .hamburger span,
 .navbar.inner-page .hamburger span { background: var(--charcoal); }
-.hamburger.open span,
+/* X button: cream on dark/transparent nav, charcoal on light nav */
+.hamburger.open span { background: var(--cream); }
 .navbar.scrolled .hamburger.open span,
-.navbar.inner-page .hamburger.open span { background: var(--cream) !important; }
+.navbar.inner-page .hamburger.open span { background: var(--charcoal) !important; }
 .hamburger.open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
 .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .hamburger.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }

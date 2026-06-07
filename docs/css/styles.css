@@ -1222,16 +1222,7 @@ button { font-family: inherit; cursor: pointer; }
 .reviews-arrow-row { display: none; }
 @media (max-width: 767px) {
   .reviews-arrow-desktop { display: none; }
-  .reviews-arrow-row {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1.25rem;
-  }
-  .reviews-arrow-row .gallery-carousel-btn {
-    position: static;
-    transform: none;
-  }
+  .reviews-arrow-row { display: none; }
 }
 .rating-badge {
   display: inline-flex;

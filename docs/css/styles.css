@@ -986,9 +986,9 @@ button { font-family: inherit; cursor: pointer; }
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
   font-size: 1.3rem;
-  color: var(--charcoal);
+  color: var(--forest-green);
   font-weight: 600;
-  line-height: 1.7;
+  line-height: 1.45;
 }
 
 /* =============================================
@@ -1247,7 +1247,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 .rating-badge .review-stars { margin-bottom: 0; gap: 1px; }
 .rating-badge .review-stars span { font-size: 0.8rem; }
-.rating-score { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--charcoal); }
+.rating-score { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--charcoal); margin-top: -6px; }
 .rating-label { font-size: 0.8rem; color: var(--mid-gray); white-space: nowrap; }
 
 /* =============================================

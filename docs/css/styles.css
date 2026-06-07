@@ -715,7 +715,11 @@ button { font-family: inherit; cursor: pointer; }
   margin-top: 0.25rem;
   text-align: center;
 }
-
+@media (max-width: 768px) {
+  .reviews-section .section-header {
+    margin-bottom: 2rem;
+  }
+}
 /* =============================================
    SIGNATURE DISHES
    ============================================= */
@@ -1211,7 +1215,7 @@ button { font-family: inherit; cursor: pointer; }
   position: absolute;
   top: 0;
   right: 0;
-  bottom: 1rem;
+  bottom: 0;
   width: 5rem;
   background: linear-gradient(to left, var(--ivory), transparent);
   pointer-events: none;
@@ -1233,7 +1237,7 @@ button { font-family: inherit; cursor: pointer; }
   padding: 0.65rem 1.25rem;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   border: 1px solid var(--parchment);
-  margin: 2.5rem auto 0;
+  margin: 2rem auto 0;
   width: fit-content;
 }
 .rating-badge .review-stars { margin-bottom: 0; gap: 1px; }
@@ -1877,7 +1881,7 @@ footer {
 .about-text h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); line-height: 1.1; color: var(--charcoal); margin-bottom: 1.5rem; }
 .about-text p { color: var(--mid-gray); line-height: 1.8; margin-bottom: 1.25rem; }
 .about-text em { font-style: italic; }
-.about-text .accent { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.35rem; color: var(--charcoal); font-weight: 600; line-height: 1.6; border-left: 3px solid var(--forest-green); padding-left: 1.25rem; margin-top: 1.5rem; margin-bottom: 1.5rem; }
+.about-text .accent { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.3rem; color: var(--forest-green); font-weight: 600; line-height: 1.45; }
 .values-section { padding: 6rem 0; background: var(--ivory); }
 .values-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
 @media (min-width: 640px) { .values-grid { grid-template-columns: repeat(2, 1fr); } }

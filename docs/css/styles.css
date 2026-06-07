@@ -1881,7 +1881,7 @@ footer {
 .about-text h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); line-height: 1.1; color: var(--charcoal); margin-bottom: 1.5rem; }
 .about-text p { color: var(--mid-gray); line-height: 1.8; margin-bottom: 1.25rem; }
 .about-text em { font-style: italic; }
-.about-text .accent { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.3rem; color: var(--forest-green); font-weight: 600; line-height: 1.45; }
+.about-text .accent { position: relative; padding-left: 1.5rem; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.3rem; color: var(--forest-green); font-weight: 600; line-height: 1.45; }
 .values-section { padding: 6rem 0; background: var(--ivory); }
 .values-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
 @media (min-width: 640px) { .values-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -2406,4 +2406,16 @@ footer {
 @keyframes loader-scale {
   from { transform: scale(0.667); }
   to   { transform: scale(1); }
+}
+.about-text .accent::before {
+  content: '\201C';
+  position: absolute;
+  left: 0;
+  top: -0.2rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  color: var(--forest-green);
+  opacity: 0.35;
+  line-height: 1;
+  font-style: normal;
 }

@@ -1742,28 +1742,30 @@ footer {
   overflow: hidden;
   background: var(--parchment);
 }
+.about-fact {
+  background: var(--cream);
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.about-fact-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--forest-green);
+  line-height: 1;
+}
+.about-fact-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.72rem;
+  color: var(--mid-gray);
+  line-height: 1.4;
+}
 @media (min-width: 1024px) {
-  .about-facts {
-  .about-fact {
-    background: var(--cream);
-    padding: 1.25rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-  }
-  .about-fact-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--forest-green);
-    line-height: 1;
-  }
-  .about-fact-label {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.75rem;
-    color: var(--mid-gray);
-    line-height: 1.4;
-  }
+  .about-fact { padding: 1.25rem 1.5rem; }
+  .about-fact-num { font-size: 2rem; }
+  .about-fact-label { font-size: 0.75rem; }
 }
 .video-wrap iframe {
   position: absolute;

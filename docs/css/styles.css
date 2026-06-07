@@ -2408,14 +2408,12 @@ footer {
   to   { transform: scale(1); }
 }
 .about-text .accent::before {
-  content: '\201C';
+  content: '';
   position: absolute;
   left: 0;
-  top: -0.2rem;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 2.5rem;
-  color: var(--forest-green);
-  opacity: 0.35;
-  line-height: 1;
-  font-style: normal;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--forest-green);
+  border-radius: 2px;
 }

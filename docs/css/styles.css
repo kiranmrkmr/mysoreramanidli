@@ -345,7 +345,9 @@ button { font-family: inherit; cursor: pointer; }
 .navbar.transparent .hamburger span { background: var(--cream); }
 .navbar.scrolled .hamburger span,
 .navbar.inner-page .hamburger span { background: var(--charcoal); }
-.hamburger.open span { background: var(--cream); }
+.hamburger.open span,
+.navbar.scrolled .hamburger.open span,
+.navbar.inner-page .hamburger.open span { background: var(--cream) !important; }
 .hamburger.open span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
 .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .hamburger.open span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
@@ -370,7 +372,6 @@ button { font-family: inherit; cursor: pointer; }
   gap: 0;
   overflow-y: auto;
 }
-.nav-drawer-spacer-top { display: none; }
 .nav-drawer.open { transform: translateX(0); }
 .nav-drawer a {
   display: block;

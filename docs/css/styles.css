@@ -1217,6 +1217,22 @@ button { font-family: inherit; cursor: pointer; }
   pointer-events: none;
 }
 .reviews-scroll-wrap { position: relative; overflow: hidden; }
+
+/* Desktop: show original arrows, hide mobile row */
+.reviews-arrow-row { display: none; }
+@media (max-width: 767px) {
+  .reviews-arrow-desktop { display: none; }
+  .reviews-arrow-row {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+  .reviews-arrow-row .gallery-carousel-btn {
+    position: static;
+    transform: none;
+  }
+}
 .rating-badge {
   display: inline-flex;
   align-items: center;

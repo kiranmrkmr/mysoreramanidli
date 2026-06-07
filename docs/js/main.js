@@ -455,6 +455,13 @@ function initReviewsArrows() {
 
   prevBtn.addEventListener('click', () => scroll.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' }));
   nextBtn.addEventListener('click', () => scroll.scrollBy({ left:  getScrollAmount(), behavior: 'smooth' }));
+
+  // Mobile duplicate buttons
+  const prevMobile = document.getElementById('reviewsPrevMobile');
+  const nextMobile = document.getElementById('reviewsNextMobile');
+  if (prevMobile) prevMobile.addEventListener('click', () => scroll.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' }));
+  if (nextMobile) nextMobile.addEventListener('click', () => scroll.scrollBy({ left:  getScrollAmount(), behavior: 'smooth' }));
+
   scroll.addEventListener('scroll', updateArrows, { passive: true });
   updateArrows();
 }

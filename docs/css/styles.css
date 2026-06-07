@@ -366,9 +366,11 @@ button { font-family: inherit; cursor: pointer; }
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
   gap: 0;
   overflow-y: auto;
 }
+.nav-drawer-spacer-top { flex: 1; pointer-events: none; min-height: 1rem; }
 .nav-drawer.open { transform: translateX(0); }
 .nav-drawer a {
   display: block;

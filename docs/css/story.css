@@ -354,9 +354,12 @@
   align-items: flex-start;
 }
 .story-secret-icon {
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
   flex-shrink: 0;
   margin-top: 0.1rem;
+  width: 22px;
+  height: 22px;
 }
 .story-secret-label {
   font-family: 'DM Sans', sans-serif;
@@ -507,8 +510,11 @@
 .story-pledge-card:hover { background: rgba(255,255,255,0.07); }
 .story-pledge-card:hover::before { opacity: 1; }
 .story-pledge-icon {
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
   margin-bottom: 0.75rem;
+  width: 22px;
+  height: 22px;
 }
 .story-pledge-title {
   font-family: 'DM Sans', sans-serif;
@@ -548,12 +554,11 @@
   margin: 0 auto;
 }
 .story-closing-ornament {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 3rem;
-  color: var(--brass);
-  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 1.5rem;
-  opacity: 0.6;
+  opacity: 0.7;
 }
 .story-closing-text {
   font-family: 'Cormorant Garamond', serif;

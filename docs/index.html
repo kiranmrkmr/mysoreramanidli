@@ -332,14 +332,25 @@
 <section class="story-section">
   <div class="container-xl">
     <div class="story-grid">
-      <div class="story-video-wrap reveal-left">
-        <iframe
-          src="https://www.youtube.com/embed/CPNdASzoP14?rel=0&modestbranding=1"
-          title="Mysore Raman Idli — Our Story"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-          loading="lazy">
-        </iframe>
+      <div class="story-video-wrap reveal-left" id="homeVideoWrap">
+        <video
+          id="homeVideo"
+          class="home-story-video"
+          src="images/sandeep-interview-web.mp4"
+          preload="none"
+          playsinline
+          poster="images/sandeep-poster.avif"
+        ></video>
+        <div class="svp-overlay state-idle" id="homeVideoOverlay">
+          <button class="svp-btn" id="homeVideoBtn" aria-label="Play video">
+            <svg class="svp-icon-play" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            <svg class="svp-icon-pause" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="3" width="4" height="18" rx="1"/><rect x="15" y="3" width="4" height="18" rx="1"/></svg>
+          </button>
+        </div>
+        <div class="home-video-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Sandeep's story — in his own words
+        </div>
       </div>
       <div class="story-text reveal">
         <div class="section-label" style="margin-bottom:1.5rem;">About Us</div>
@@ -799,5 +810,25 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script>
+  (function () {
+    const video   = document.getElementById('homeVideo');
+    const overlay = document.getElementById('homeVideoOverlay');
+    const btn     = document.getElementById('homeVideoBtn');
+    if (!video || !overlay || !btn) return;
+    const isTouchDevice = () => window.matchMedia('(hover: none)').matches;
+    function setIdle()    { overlay.className = 'svp-overlay state-idle'; }
+    function setPlaying() { overlay.className = 'svp-overlay state-playing'; }
+    setIdle();
+    btn.addEventListener('click', () => { video.paused ? video.play() : video.pause(); });
+    overlay.addEventListener('click', (e) => {
+      if (e.target === btn || btn.contains(e.target)) return;
+      if (isTouchDevice() && !video.paused) video.pause();
+    });
+    video.addEventListener('play',  setPlaying);
+    video.addEventListener('pause', setIdle);
+    video.addEventListener('ended', setIdle);
+  })();
+</script>
 </body>
 </html>

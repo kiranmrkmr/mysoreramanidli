@@ -919,7 +919,7 @@ button { font-family: inherit; cursor: pointer; }
   align-items: center;
 }
 @media (min-width: 1024px) {
-  .story-grid { grid-template-columns: repeat(2, 1fr); gap: 5rem; }
+  .story-grid { grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
 }
 .story-images { position: relative; order: 2; }
 @media (min-width: 1024px) { .story-images { order: 1; } }
@@ -1782,9 +1782,9 @@ footer {
 }
 .story-video-wrap {
   position: relative;
-  border-radius: 1rem;
+  border-radius: 1.25rem;
   overflow: hidden;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+  box-shadow: 0 32px 72px rgba(0,0,0,0.22);
   aspect-ratio: 16 / 9;
   background: #000;
   order: 2;
@@ -1797,6 +1797,32 @@ footer {
   height: 100%;
   border: none;
   display: block;
+}
+.home-story-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* Tag label on video */
+.home-video-tag {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: rgba(255,255,255,0.85);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.35rem 0.75rem;
+  border-radius: 2rem;
+  pointer-events: none;
+  letter-spacing: 0.02em;
 }
 .about-text h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); line-height: 1.1; color: var(--charcoal); margin-bottom: 1.5rem; }
 .about-text p { color: var(--mid-gray); line-height: 1.8; margin-bottom: 1.25rem; }

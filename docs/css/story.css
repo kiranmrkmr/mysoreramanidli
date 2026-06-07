@@ -737,7 +737,7 @@
   .story-video-section { padding: 5rem 2.5rem; }
 }
 .story-video-inner {
-  max-width: 52rem;
+  max-width: 66rem;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -817,8 +817,8 @@
 }
 
 .svp-btn {
-  width: 4rem;
-  height: 4rem;
+  width: 3.4rem;
+  height: 3.4rem;
   border-radius: 50%;
   background: rgba(255,255,255,0.15);
   backdrop-filter: blur(8px);
@@ -831,7 +831,7 @@
   cursor: pointer;
   transition: background 0.2s, transform 0.15s;
 }
-.svp-btn:hover { background: rgba(255,255,255,0.25); transform: scale(1.08); }
+.svp-btn:hover { background: rgba(255,255,255,0.25); }
 .svp-icon-play, .svp-icon-pause { flex-shrink: 0; }
 
 /* ── Mobile overrides ── */

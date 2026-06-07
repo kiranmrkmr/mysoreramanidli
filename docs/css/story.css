@@ -1,0 +1,657 @@
+/* =============================================
+   OUR STORY PAGE — story.css
+   ============================================= */
+
+/* ── Hero ── */
+.story-hero {
+  position: relative;
+  min-height: 100svh;
+  background: var(--forest-deep);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  padding: 7rem 1.5rem 4rem;
+}
+.story-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 110%, rgba(26,92,42,0.55) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(196,150,42,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+.story-hero-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+.story-hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brass-light);
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+.story-hero-eyebrow::before,
+.story-hero-eyebrow::after {
+  content: '';
+  display: block;
+  width: 2rem;
+  height: 1px;
+  background: var(--brass);
+  opacity: 0.6;
+}
+.story-hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 9vw, 7rem);
+  font-weight: 800;
+  line-height: 1.0;
+  color: var(--cream);
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+  position: relative;
+  z-index: 1;
+}
+.story-hero-title span {
+  display: block;
+  font-style: italic;
+  color: var(--brass-light);
+}
+.story-hero-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  color: rgba(250,248,242,0.6);
+  font-style: italic;
+  max-width: 28rem;
+  line-height: 1.5;
+  margin-bottom: 3rem;
+  position: relative;
+  z-index: 1;
+}
+.story-hero-scroll {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(250,248,242,0.35);
+}
+.story-hero-scroll-line {
+  width: 1px;
+  height: 3rem;
+  background: linear-gradient(to bottom, rgba(250,248,242,0.3), transparent);
+  animation: storyScrollPulse 2s ease-in-out infinite;
+}
+@keyframes storyScrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50%       { opacity: 0.8; transform: scaleY(1.2); }
+}
+
+/* Decorative floating elements in hero */
+.story-hero-deco {
+  position: absolute;
+  font-family: 'Playfair Display', serif;
+  font-size: 18rem;
+  font-weight: 900;
+  color: rgba(255,255,255,0.015);
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+  bottom: -2rem;
+  right: -2rem;
+}
+
+/* ── Layout wrapper (desktop sidebar + content) ── */
+.story-layout {
+  display: block;
+}
+@media (min-width: 1024px) {
+  .story-layout {
+    display: flex;
+    align-items: flex-start;
+  }
+}
+
+/* ── Desktop sticky sidebar nav ── */
+.story-sidenav {
+  display: none;
+}
+@media (min-width: 1024px) {
+  .story-sidenav {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 5rem;
+    width: 220px;
+    flex-shrink: 0;
+    padding: 2rem 1.5rem 2rem 2rem;
+    gap: 0;
+  }
+  .story-sidenav-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid-gray);
+    margin-bottom: 1.25rem;
+  }
+  .story-sidenav a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    color: var(--mid-gray);
+    text-decoration: none;
+    padding: 0.5rem 0 0.5rem 1rem;
+    border-left: 2px solid var(--parchment);
+    transition: color 0.25s, border-color 0.25s;
+    line-height: 1.4;
+  }
+  .story-sidenav a.active,
+  .story-sidenav a:hover {
+    color: var(--forest-green);
+    border-left-color: var(--forest-green);
+  }
+}
+
+/* ── Chapter sections ── */
+.story-chapters {
+  flex: 1;
+  min-width: 0;
+}
+
+.story-chapter {
+  position: relative;
+  padding: 4rem 1.5rem;
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  .story-chapter { padding: 5rem 2.5rem; }
+}
+@media (min-width: 1024px) {
+  .story-chapter { padding: 6rem 3rem 6rem 2rem; }
+}
+
+.story-chapter--light  { background: var(--cream); }
+.story-chapter--ivory  { background: var(--ivory); }
+.story-chapter--dark   { background: var(--forest-deep); }
+.story-chapter--forest { background: var(--forest-dark); }
+
+/* Chapter number watermark */
+.story-ch-num {
+  position: absolute;
+  top: -1rem;
+  right: -0.5rem;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(7rem, 22vw, 14rem);
+  font-weight: 900;
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+}
+.story-chapter--light  .story-ch-num,
+.story-chapter--ivory  .story-ch-num  { color: rgba(26,92,42,0.05); }
+.story-chapter--dark   .story-ch-num,
+.story-chapter--forest .story-ch-num  { color: rgba(255,255,255,0.03); }
+
+.story-ch-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 42rem;
+}
+
+.story-ch-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.story-ch-label::after {
+  content: '';
+  display: block;
+  width: 1.5rem;
+  height: 1px;
+  background: var(--brass);
+  opacity: 0.5;
+}
+.story-chapter--dark  .story-ch-label,
+.story-chapter--forest .story-ch-label { color: var(--brass-light); }
+.story-chapter--dark  .story-ch-label::after,
+.story-chapter--forest .story-ch-label::after { background: var(--brass-light); }
+
+.story-ch-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.7rem, 5vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--charcoal);
+  margin-bottom: 1.5rem;
+}
+.story-chapter--dark  .story-ch-title,
+.story-chapter--forest .story-ch-title { color: var(--cream); }
+
+.story-ch-body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--mid-gray);
+}
+.story-ch-body p { margin-bottom: 1.1rem; }
+.story-ch-body p:last-child { margin-bottom: 0; }
+.story-chapter--dark  .story-ch-body,
+.story-chapter--forest .story-ch-body { color: rgba(250,248,242,0.65); }
+
+/* Pull quotes */
+.story-pullquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.3rem, 4vw, 1.75rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--forest-green);
+  border-left: 3px solid var(--forest-green);
+  padding: 0.75rem 0 0.75rem 1.25rem;
+  margin: 2rem 0;
+}
+.story-chapter--dark  .story-pullquote,
+.story-chapter--forest .story-pullquote {
+  color: var(--brass-light);
+  border-left-color: var(--brass);
+}
+
+/* ── Special: Oath card (Chapter 3) ── */
+.story-oath-card {
+  position: relative;
+  background: rgba(196,150,42,0.06);
+  border: 1px solid rgba(196,150,42,0.3);
+  border-radius: 1rem;
+  padding: 1.75rem 1.5rem;
+  margin-top: 2rem;
+}
+.story-oath-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(196,150,42,0.07) 0%, transparent 60%);
+  pointer-events: none;
+}
+.story-oath-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.story-oath-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  background: rgba(196,150,42,0.15);
+  border: 1px solid rgba(196,150,42,0.35);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+.story-oath-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--brass-light);
+}
+.story-oath-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.05rem, 3vw, 1.25rem);
+  font-style: italic;
+  line-height: 1.65;
+  color: rgba(250,248,242,0.82);
+}
+.story-oath-footer {
+  margin-top: 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  color: var(--brass);
+  font-weight: 500;
+}
+
+/* ── Special: Secret reveal (Chapter 4) ── */
+.story-secret-box {
+  background: var(--forest-green);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.story-secret-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+.story-secret-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brass-light);
+  margin-bottom: 0.35rem;
+}
+.story-secret-text {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.2rem, 4vw, 1.5rem);
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+.story-secret-sub {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  color: rgba(250,248,242,0.65);
+  line-height: 1.6;
+}
+
+/* ── Special: 5-hour clock (Chapter 5) ── */
+.story-clock-band {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 1.75rem 0;
+}
+.story-clock-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--forest-green);
+  color: var(--cream);
+  border-radius: 2rem;
+  padding: 0.4rem 0.9rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.story-clock-pill svg { flex-shrink: 0; }
+.story-clock-divider {
+  font-size: 0.75rem;
+  color: var(--mid-gray);
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ── Special: Butter highlight (Chapter 6) ── */
+.story-butter-card {
+  border-top: 2px solid var(--brass);
+  padding-top: 1.25rem;
+  margin-top: 1.75rem;
+}
+.story-butter-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 0.5rem;
+}
+.story-butter-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+  font-style: italic;
+  color: var(--charcoal);
+  line-height: 1.6;
+}
+
+/* ── Promise / Pledge section ── */
+.story-promise {
+  background: var(--forest-dark);
+  padding: 4rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  .story-promise { padding: 5rem 2.5rem; }
+}
+.story-promise::before {
+  content: 'PROMISE';
+  position: absolute;
+  bottom: -2rem;
+  right: -1rem;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(5rem, 18vw, 12rem);
+  font-weight: 900;
+  color: rgba(255,255,255,0.02);
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+}
+.story-promise-eyebrow {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brass-light);
+  margin-bottom: 0.75rem;
+}
+.story-promise-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.7rem, 5vw, 2.6rem);
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.15;
+  margin-bottom: 2.5rem;
+  max-width: 26rem;
+}
+.story-promise-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+@media (min-width: 600px) {
+  .story-promise-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 900px) {
+  .story-promise-grid { grid-template-columns: repeat(4, 1fr); }
+}
+.story-pledge-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 0.75rem;
+  padding: 1.5rem 1.25rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.25s;
+}
+.story-pledge-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--brass), var(--brass-light));
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.story-pledge-card:hover { background: rgba(255,255,255,0.07); }
+.story-pledge-card:hover::before { opacity: 1; }
+.story-pledge-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+.story-pledge-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--brass-light);
+  margin-bottom: 0.5rem;
+}
+.story-pledge-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  color: rgba(250,248,242,0.55);
+  line-height: 1.6;
+}
+
+/* ── Closing tribute ── */
+.story-closing {
+  background: var(--forest-deep);
+  padding: 5rem 1.5rem 6rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.story-closing::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(26,92,42,0.4) 0%, transparent 70%);
+  pointer-events: none;
+}
+.story-closing-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 36rem;
+  margin: 0 auto;
+}
+.story-closing-ornament {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  color: var(--brass);
+  line-height: 1;
+  margin-bottom: 1.5rem;
+  opacity: 0.6;
+}
+.story-closing-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.2rem, 4vw, 1.6rem);
+  font-style: italic;
+  color: rgba(250,248,242,0.75);
+  line-height: 1.65;
+  margin-bottom: 2.5rem;
+}
+.story-closing-text strong {
+  color: var(--brass-light);
+  font-style: normal;
+  font-weight: 600;
+}
+.story-closing-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--forest-green);
+  color: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.875rem 2rem;
+  border-radius: 0.375rem;
+  text-decoration: none;
+  transition: background 0.25s, transform 0.2s;
+}
+.story-closing-cta:hover {
+  background: var(--forest-light);
+  transform: translateY(-2px);
+}
+
+/* ── Divider between chapters ── */
+.story-chapter-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1.5rem;
+  background: inherit;
+}
+.story-chapter-divider span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--brass);
+  opacity: 0.4;
+}
+
+/* ── Character tag (Seetha Patti) ── */
+.story-character {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(196,150,42,0.1);
+  border: 1px solid rgba(196,150,42,0.25);
+  border-radius: 2rem;
+  padding: 0.4rem 1rem 0.4rem 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.story-character-avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: rgba(196,150,42,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+.story-character-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--brass-light);
+}
+.story-character-role {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.65rem;
+  color: rgba(250,248,242,0.45);
+}
+
+/* ── Reveal animation ── */
+.story-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.story-reveal.revealed {
+  opacity: 1;
+  transform: none;
+}
+.story-reveal[data-delay="1"] { transition-delay: 0.1s; }
+.story-reveal[data-delay="2"] { transition-delay: 0.2s; }
+.story-reveal[data-delay="3"] { transition-delay: 0.3s; }
+.story-reveal[data-delay="4"] { transition-delay: 0.4s; }
+
+/* ── Mobile nav link addition ── */
+.story-nav-link.active { color: var(--forest-green) !important; }

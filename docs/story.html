@@ -462,9 +462,11 @@
 
     function setIdle() {
       overlay.className = 'svp-overlay state-idle';
+      video.removeAttribute('controls');
     }
     function setPlaying() {
       overlay.className = 'svp-overlay state-playing';
+      if (!isTouchDevice()) video.setAttribute('controls', '');
     }
 
     // Initial state

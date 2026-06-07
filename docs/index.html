@@ -817,8 +817,8 @@
     const btn     = document.getElementById('homeVideoBtn');
     if (!video || !overlay || !btn) return;
     const isTouchDevice = () => window.matchMedia('(hover: none)').matches;
-    function setIdle()    { overlay.className = 'svp-overlay state-idle'; }
-    function setPlaying() { overlay.className = 'svp-overlay state-playing'; }
+    function setIdle()    { overlay.className = 'svp-overlay state-idle'; video.removeAttribute('controls'); }
+    function setPlaying() { overlay.className = 'svp-overlay state-playing'; if (!isTouchDevice()) video.setAttribute('controls', ''); }
     setIdle();
     btn.addEventListener('click', () => { video.paused ? video.play() : video.pause(); });
     overlay.addEventListener('click', (e) => {

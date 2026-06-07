@@ -45,6 +45,8 @@ function initNavbar() {
     });
     overlay.addEventListener('click', closeDrawer);
     drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
+    const drawerCloseBtn = drawer.querySelector('.nav-drawer-close');
+    if (drawerCloseBtn) drawerCloseBtn.addEventListener('click', closeDrawer);
   }
 }
 

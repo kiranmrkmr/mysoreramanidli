@@ -59,7 +59,7 @@ function updateNavForNamespace(namespace) {
 
   if (!navbar) return;
 
-  if (namespace === 'home') {
+  if (namespace === 'home' || namespace === 'story') {
     navbar.classList.remove('inner-page');
     if (window.scrollY <= 50) {
       navbar.classList.add('transparent');

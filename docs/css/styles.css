@@ -331,8 +331,10 @@ button { font-family: inherit; cursor: pointer; }
   background: none;
   border: none;
   cursor: pointer;
-  z-index: 1001;
-  position: relative;
+  position: fixed;
+  top: 1.1rem;
+  right: 24px;
+  z-index: 99999;
 }
 @media (min-width: 900px) { .hamburger { display: none; } }
 .hamburger span {

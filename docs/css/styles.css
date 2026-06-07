@@ -919,7 +919,7 @@ button { font-family: inherit; cursor: pointer; }
   align-items: center;
 }
 @media (min-width: 1024px) {
-  .story-grid { grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .story-grid { grid-template-columns: 1fr 1fr; gap: 4rem; align-items: stretch; }
 }
 .story-images { position: relative; order: 2; }
 @media (min-width: 1024px) { .story-images { order: 1; } }
@@ -1789,7 +1789,14 @@ footer {
   background: #000;
   order: 2;
 }
-@media (min-width: 1024px) { .story-video-wrap { order: 1; } }
+@media (min-width: 1024px) {
+  .story-video-wrap {
+    order: 1;
+    aspect-ratio: unset;
+    min-height: 380px;
+    height: 100%;
+  }
+}
 .story-video-wrap iframe {
   position: absolute;
   inset: 0;

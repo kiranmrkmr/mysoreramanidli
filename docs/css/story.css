@@ -182,6 +182,7 @@
   position: relative;
   padding: 4rem 1.5rem;
   overflow: hidden;
+  scroll-margin-top: 80px;
 }
 @media (min-width: 768px) {
   .story-chapter { padding: 5rem 2.5rem; }
@@ -508,6 +509,7 @@
   padding: 4rem 1.5rem;
   position: relative;
   overflow: hidden;
+  scroll-margin-top: 80px;
 }
 @media (min-width: 768px) {
   .story-promise { padding: 5rem 2.5rem; }
@@ -729,6 +731,7 @@
 .story-video-section {
   background: var(--ivory);
   padding: 4rem 1.5rem;
+  scroll-margin-top: 80px;
 }
 @media (min-width: 768px) {
   .story-video-section { padding: 5rem 2.5rem; }

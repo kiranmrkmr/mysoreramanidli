@@ -370,7 +370,7 @@ button { font-family: inherit; cursor: pointer; }
   gap: 0;
   overflow-y: auto;
 }
-.nav-drawer-spacer-top { flex: 1; pointer-events: none; min-height: 1rem; }
+.nav-drawer-spacer-top { display: none; }
 .nav-drawer.open { transform: translateX(0); }
 .nav-drawer a {
   display: block;

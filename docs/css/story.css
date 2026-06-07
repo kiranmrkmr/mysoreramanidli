@@ -776,6 +776,61 @@
   object-fit: cover;
 }
 
+/* ── Custom video player overlay ── */
+.story-video-wrap { position: relative; }
+
+.svp-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.25s;
+}
+
+/* Idle (paused / not started): show play button with dark bg */
+.svp-overlay.state-idle { background: rgba(0,0,0,0.25); }
+.svp-overlay.state-idle .svp-icon-pause { display: none; }
+.svp-overlay.state-idle .svp-icon-play  { display: block; }
+
+/* Playing on mobile: overlay hidden */
+.svp-overlay.state-playing { opacity: 0; pointer-events: none; }
+.svp-overlay.state-playing .svp-icon-pause { display: none; }
+.svp-overlay.state-playing .svp-icon-play  { display: none; }
+
+/* Playing on desktop: show pause on hover */
+@media (hover: hover) {
+  .svp-overlay.state-playing {
+    opacity: 0;
+    pointer-events: auto;
+    background: transparent;
+  }
+  .svp-overlay.state-playing:hover {
+    opacity: 1;
+    background: rgba(0,0,0,0.3);
+  }
+  .svp-overlay.state-playing .svp-icon-pause { display: block; }
+  .svp-overlay.state-playing .svp-icon-play  { display: none; }
+}
+
+.svp-btn {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 2px solid rgba(255,255,255,0.4);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.svp-btn:hover { background: rgba(255,255,255,0.25); transform: scale(1.08); }
+.svp-icon-play, .svp-icon-pause { flex-shrink: 0; }
+
 /* ── Mobile overrides ── */
 @media (max-width: 767px) {
   .story-promise::before { bottom: -1.6rem; }

@@ -289,16 +289,23 @@
       <h2 class="story-video-title">Hear the story<br>from Sandeep himself</h2>
       <p class="story-video-sub">From losing everything during COVID to finding Seetha Patti, watch Sandeep share the journey that became Mysore Raman Idli.</p>
     </div>
-    <div class="story-video-wrap story-reveal" data-delay="2">
+    <div class="story-video-wrap story-reveal" data-delay="2" id="storyVideoWrap">
       <video
         class="story-video-player"
+        id="storyVideo"
         src="images/sandeep-interview-web.mp4"
-        controls
         preload="none"
         playsinline
         poster="images/sandeep-poster.avif"
         aria-label="Sandeep's interview about the origin of Mysore Raman Idli"
       ></video>
+      <!-- Custom overlay -->
+      <div class="svp-overlay" id="svpOverlay">
+        <button class="svp-btn" id="svpBtn" aria-label="Play video">
+          <svg class="svp-icon-play" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+          <svg class="svp-icon-pause" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="3" width="4" height="18" rx="1"/><rect x="15" y="3" width="4" height="18" rx="1"/></svg>
+        </button>
+      </div>
     </div>
   </div>
 </section>
@@ -442,6 +449,47 @@
     }, { rootMargin: '-40% 0px -50% 0px' });
 
     sections.forEach(s => obs.observe(s));
+  })();
+
+  // ── Custom video player ──
+  (function () {
+    const video   = document.getElementById('storyVideo');
+    const overlay = document.getElementById('svpOverlay');
+    const btn     = document.getElementById('svpBtn');
+    if (!video || !overlay || !btn) return;
+
+    const isTouchDevice = () => window.matchMedia('(hover: none)').matches;
+
+    function setIdle() {
+      overlay.className = 'svp-overlay state-idle';
+    }
+    function setPlaying() {
+      overlay.className = 'svp-overlay state-playing';
+    }
+
+    // Initial state
+    setIdle();
+
+    // Play/pause on button click
+    btn.addEventListener('click', () => {
+      if (video.paused) {
+        video.play();
+      } else {
+        video.pause();
+      }
+    });
+
+    // On mobile: tapping the overlay while playing pauses
+    overlay.addEventListener('click', (e) => {
+      if (e.target === btn || btn.contains(e.target)) return;
+      if (isTouchDevice() && !video.paused) {
+        video.pause();
+      }
+    });
+
+    video.addEventListener('play',  setPlaying);
+    video.addEventListener('pause', setIdle);
+    video.addEventListener('ended', setIdle);
   })();
 </script>
 </body>
